@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Treino - Sábado / Domingo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #a7ffeb; /* verde água */
+      color: #004d40;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    #exercicios-lista {
+      list-style: none;
+      padding: 0;
+      max-width: 500px;
+      margin-bottom: 20px;
+    }
+    #exercicios-lista li {
+      background: #b2f5ea;
+      margin-bottom: 8px;
+      padding: 10px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+    }
+    #exercicios-lista li input[type="text"] {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 1em;
+      color: #004d40;
+      outline: none;
+    }
+    #exercicios-lista li button {
+      background: #004d40;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 8px;
+      transition: background 0.3s ease;
+    }
+    #exercicios-lista li button:hover {
+      background: #00281a;
+    }
+    #adicionar-btn {
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 10px;
+      border: none;
+      background: #004d40;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    #adicionar-btn:hover {
+      background: #00281a;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: #004d40;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌊 Sábado / Domingo – Agenda de Treino</h1>
+  <p>Adicione e edite os exercícios ou atividades que realizou neste dia. Seus dados ficam salvos no navegador.</p>
+
+  <ul id="exercicios-lista">
+    <!-- Itens vão aparecer aqui -->
+  </ul>
+
+  <button id="adicionar-btn">+ Adicionar Exercício</button>
+
+  <a class="back-link" href="index.html">⬅ Voltar para o Início</a>
+
+  <script>
+    const lista = document.getElementById('exercicios-lista');
+    const botaoAdicionar = document.getElementById('adicionar-btn');
+
+    // Função para salvar no localStorage
+    function salvarLista() {
+      const itens = [];
+      document.querySelectorAll('#exercicios-lista li input[type="text"]').forEach(input => {
+        itens.push(input.value.trim());
+      });
+      localStorage.setItem('sabadoDomingoTreino', JSON.stringify(itens));
+    }
+
+    // Função para criar um item novo na lista
+    function criarItem(texto = '') {
+      const li = document.createElement('li');
+
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = texto;
+      input.placeholder = 'Descreva o exercício ou atividade...';
+      input.addEventListener('input', salvarLista);
+
+      const btnExcluir = document.createElement('button');
+      btnExcluir.textContent = '✖';
+      btnExcluir.title = 'Remover exercício';
+      btnExcluir.onclick = () => {
+        li.remove();
+        salvarLista();
+      };
+
+      li.appendChild(input);
+      li.appendChild(btnExcluir);
+
+      lista.appendChild(li);
+    }
+
+    // Carregar lista salva
+    function carregarLista() {
+      const dados = localStorage.getItem('sabadoDomingoTreino');
+      if (dados) {
+        const itens = JSON.parse(dados);
+        itens.forEach(texto => {
+          if(texto) criarItem(texto);
+        });
+      }
+    }
+
+    // Evento botão adicionar
+    botaoAdicionar.addEventListener('click', () => {
+      criarItem('');
+      salvarLista();
+    });
+
+    // Inicializa
+    carregarLista();
+  </script>
+</body>
+</html>
+

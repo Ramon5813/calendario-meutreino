@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dietas & Receitas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f0f4f8;
+      color: #222;
+      max-width: 600px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    form {
+      margin-bottom: 30px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      resize: vertical;
+    }
+    button, .btn {
+      background: #1976d2;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      font-size: 0.9em;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-left: 5px;
+    }
+    button:hover, .btn:hover {
+      background: #0d47a1;
+    }
+    .lista-dietas {
+      list-style-type: none;
+      padding: 0;
+    }
+    .lista-dietas li {
+      background: #e3f2fd;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      position: relative;
+    }
+    .actions {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+    .voltar {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #1976d2;
+      font-weight: bold;
+    }
+    .voltar:hover {
+      text-decoration: underline;
+    }
+    textarea.edit-textarea {
+      width: 100%;
+      height: 80px;
+      font-size: 1em;
+      margin-bottom: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      resize: vertical;
+    }
+  </style>
+</head>
+<body>
+  <h2>🍽️ Dietas & Receitas</h2>
+
+  <form id="form-dieta">
+    <label for="novaDieta">Adicione uma nova dieta ou receita:</label>
+    <textarea id="novaDieta" placeholder="Digite sua dieta ou receita aqui..." required></textarea>
+    <button type="submit">Salvar</button>
+  </form>
+
+  <ul class="lista-dietas" id="listaDietas"></ul>
+
+  <a href="observacoes.html" class="voltar">⬅ Voltar para Observações</a><br/>
+  <a href="index.html" class="voltar">⬅ Voltar para Página Inicial</a>
+
+<script>
+  const form = document.getElementById('form-dieta');
+  const textarea = document.getElementById('novaDieta');
+  const listaDietas = document.getElementById('listaDietas');
+
+  // Carrega dietas do localStorage
+  function carregarDietas() {
+    const dietas = JSON.parse(localStorage.getItem('dietas')) || [];
+    listaDietas.innerHTML = '';
+
+    dietas.forEach((dieta, index) => {
+      const li = document.createElement('li');
+
+      // Div que mostra o texto
+      const textoDiv = document.createElement('div');
+      textoDiv.textContent = dieta;
+      textoDiv.style.whiteSpace = 'pre-wrap';
+
+      // Div de ações: editar e apagar
+      const actionsDiv = document.createElement('div');
+      actionsDiv.className = 'actions';
+
+      // Botão editar
+      const btnEditar = document.createElement('button');
+      btnEditar.textContent = 'Editar';
+      btnEditar.className = 'btn';
+      btnEditar.onclick = () => iniciarEdicao(index, li, textoDiv);
+
+      // Botão apagar
+      const btnApagar = document.createElement('button');
+      btnApagar.textContent = 'Apagar';
+      btnApagar.className = 'btn';
+      btnApagar.style.backgroundColor = '#d32f2f';
+      btnApagar.onmouseover = () => btnApagar.style.backgroundColor = '#9a0007';
+      btnApagar.onmouseout = () => btnApagar.style.backgroundColor = '#d32f2f';
+      btnApagar.onclick = () => apagarDieta(index);
+
+      actionsDiv.appendChild(btnEditar);
+      actionsDiv.appendChild(btnApagar);
+
+      li.appendChild(textoDiv);
+      li.appendChild(actionsDiv);
+
+      listaDietas.appendChild(li);
+    });
+  }
+
+  // Iniciar edição da dieta
+  function iniciarEdicao(index, li, textoDiv) {
+    const dietas = JSON.parse(localStorage.getItem('dietas')) || [];
+    const textoAtual = dietas[index];
+
+    // Substitui o texto por textarea para editar
+    const textareaEdit = document.createElement('textarea');
+    textareaEdit.className = 'edit-textarea';
+    textareaEdit.value = textoAtual;
+
+    // Botão salvar edição
+    const btnSalvar = document.createElement('button');
+    btnSalvar.textContent = 'Salvar';
+    btnSalvar.className = 'btn';
+    btnSalvar.onclick = () => {
+      const novoTexto = textareaEdit.value.trim();
+      if (novoTexto) {
+        dietas[index] = novoTexto;
+        localStorage.setItem('dietas', JSON.stringify(dietas));
+        carregarDietas();
+      } else {
+        alert('O texto da dieta não pode ficar vazio.');
+      }
+    };
+
+    // Botão cancelar edição
+    const btnCancelar = document.createElement('button');
+    btnCancelar.textContent = 'Cancelar';
+    btnCancelar.className = 'btn';
+    btnCancelar.style.backgroundColor = '#757575';
+    btnCancelar.onmouseover = () => btnCancelar.style.backgroundColor = '#424242';
+    btnCancelar.onmouseout = () => btnCancelar.style.backgroundColor = '#757575';
+    btnCancelar.onclick = () => {
+      carregarDietas();
+    };
+
+    // Limpa o conteúdo do <li> e adiciona textarea + botões
+    li.innerHTML = '';
+    li.appendChild(textareaEdit);
+
+    const divBotoes = document.createElement('div');
+    divBotoes.style.marginTop = '5px';
+    divBotoes.appendChild(btnSalvar);
+    divBotoes.appendChild(btnCancelar);
+
+    li.appendChild(divBotoes);
+  }
+
+  // Apagar dieta
+  function apagarDieta(index) {
+    if (confirm('Tem certeza que deseja apagar esta dieta?')) {
+      const dietas = JSON.parse(localStorage.getItem('dietas')) || [];
+      dietas.splice(index, 1);
+      localStorage.setItem('dietas', JSON.stringify(dietas));
+      carregarDietas();
+    }
+  }
+
+  // Salvar nova dieta
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const texto = textarea.value.trim();
+    if (texto) {
+      const dietas = JSON.parse(localStorage.getItem('dietas')) || [];
+      dietas.push(texto);
+      localStorage.setItem('dietas', JSON.stringify(dietas));
+      textarea.value = '';
+      carregarDietas();
+    }
+  });
+
+  carregarDietas();
+</script>
+</body>
+</html>
+
+
