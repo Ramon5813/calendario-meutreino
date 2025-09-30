@@ -4,7 +4,71 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Observações</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ===== Corpo da página ===== */
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-image: url('xmen-bg.jpg'); /* imagem de fundo X-Men */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      color: #ffdd00;
+    }
+
+    /* ===== Container principal ===== */
+    .container {
+      max-width: 600px;
+      width: 100%;
+      padding: 20px;
+      background: rgba(0,0,0,0.75);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+    }
+
+    /* ===== Título ===== */
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ffdd00;
+      text-shadow: 2px 2px 5px black;
+    }
+
+    /* ===== Lista ===== */
+    ul {
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+      background: rgba(255,255,255,0.9);
+      color: #222;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+
+    /* ===== Link voltar ===== */
+    .voltar {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #ffdd00;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px black;
+    }
+
+    .voltar:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
