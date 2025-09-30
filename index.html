@@ -3,94 +3,121 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Calendário + Menu de Treinos</title>
+  <title>Calendário + Menu de Treinos - X-Men</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Arial', sans-serif;
       padding: 20px;
-      background: #f0f4f8;
-      color: #222;
+      margin: 0;
+      color: #fff;
+
+      /* Fundo X-Men */
+      background-image: url('xmen-bg.jpg'); /* Coloque a imagem dos X-Men na mesma pasta */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+
       display: flex;
       flex-direction: column;
       align-items: center;
     }
+
     h1 {
       margin-bottom: 20px;
       text-align: center;
+      text-shadow: 2px 2px 5px black;
+      font-family: 'Comic Sans MS', cursive, sans-serif; /* estilo HQ */
     }
 
     /* Calendário */
     #calendario {
       max-width: 350px;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+      background: rgba(0,0,0,0.75); /* semi-transparente */
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.8);
       padding: 15px;
       margin-bottom: 40px;
       user-select: none;
     }
+
     #mes-ano {
       text-align: center;
       font-size: 1.4em;
       margin-bottom: 10px;
+      color: #ffdd00; /* amarelo quadrinhos */
+      text-shadow: 1px 1px 3px black;
     }
+
     #dias-semana {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       font-weight: bold;
-      color: #555;
+      color: #ff4444; /* vermelho HQ */
       margin-bottom: 5px;
     }
+
     #dias-semana div {
       text-align: center;
       padding: 5px 0;
     }
+
     #dias-mes {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       gap: 5px;
     }
+
     .dia {
-      background: #e3f2fd;
+      background: rgba(255,255,255,0.1);
       padding: 10px 0;
       border-radius: 6px;
       text-align: center;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, color 0.3s ease;
       position: relative;
     }
+
     .dia:hover {
-      background: #90caf9;
+      background: rgba(255,255,255,0.3);
+      color: #ffdd00;
     }
+
     .dia.marcado {
-      background: #1976d2;
-      color: white;
+      background: #ffdd00;
+      color: #000;
       font-weight: bold;
     }
+
     .dia.hoje {
-      border: 2px solid #0d47a1;
+      border: 2px solid #ff4444;
     }
+
     .dia.vazio {
       background: transparent;
       cursor: default;
     }
+
     #navegacao {
       text-align: center;
       margin-top: 15px;
     }
+
     #navegacao button {
-      background: #1976d2;
+      background: #ff4444;
       border: none;
-      color: white;
+      color: #fff;
       padding: 8px 15px;
       margin: 0 10px;
       font-size: 1em;
       border-radius: 6px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: transform 0.2s ease, background-color 0.3s ease;
     }
+
     #navegacao button:hover {
-      background: #0d47a1;
+      background: #cc0000;
+      transform: scale(1.05);
     }
 
     /* Menu de treinos */
@@ -99,36 +126,54 @@
       max-width: 350px;
       text-align: center;
     }
+
     .menu-container h2 {
       margin-bottom: 15px;
-      color: #333;
+      color: #ffdd00;
+      text-shadow: 1px 1px 3px black;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
     }
+
     .menu {
       list-style: none;
       padding: 0;
       margin: 0;
     }
+
     .menu li {
       margin: 10px 0;
     }
+
     .menu a {
       display: inline-block;
       padding: 15px 25px;
-      background-color: #90caf9;
-      color: #0d47a1;
+      background-color: #ff4444;
+      color: #fff;
       text-decoration: none;
       border-radius: 10px;
       font-size: 1.2em;
       font-weight: bold;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, background-color 0.3s ease;
       user-select: none;
     }
+
     .menu a:hover {
       transform: scale(1.05);
+      background-color: #cc0000;
     }
+
     .menu a.sabado-domingo {
-      background-color: #a7ffeb;
-      color: #004d40;
+      background-color: #4444ff;
+      color: #ffdd00;
+    }
+
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 1em;
+      color: #ffdd00;
+      text-shadow: 1px 1px 3px black;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
     }
   </style>
 </head>
@@ -156,12 +201,13 @@
       <li><a href="quarta.html">Quarta</a></li>
       <li><a href="quinta.html">Quinta</a></li>
       <li><a href="sexta.html">Sexta</a></li>
-      <li><a href="sabado-domingo.html" class="sabado-domingo">🌊 Sábado / Domingo</a></li>
+      <li><a href="sabado-domingo.html" class="sabado-domingo">Sábado / Domingo</a></li>
       <li><a href="observacoes.html">Observações</a></li>
-       <li><a href="dietas.html">Dietas</a></li>  <!-- Novo link -->
-</ul>
+      <li><a href="dietas.html">Dietas</a></li>
     </ul>
   </div>
+
+  <footer>✨ Treine como um X-Men! ✨</footer>
 
 <script>
   const mesAnoEl = document.getElementById('mes-ano');
@@ -266,5 +312,3 @@
 
 </body>
 </html>
-
-
