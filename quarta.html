@@ -5,61 +5,116 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Treino - Quarta-feira</title>
   <style>
+    /* ===== Corpo da página ===== */
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-image: url('xmen-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      margin: 0;
       padding: 20px;
-      background: #e8f5e9;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      color: #ffdd00;
     }
+
+    /* ===== Container principal ===== */
+    .container {
+      max-width: 600px;
+      width: 100%;
+      padding: 20px;
+      background: rgba(0,0,0,0.75);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+    }
+
+    /* ===== Títulos ===== */
     h1 {
-      color: #2e7d32;
+      text-align: center;
+      color: #ffdd00;
+      text-shadow: 2px 2px 5px black;
+      margin-bottom: 20px;
     }
+
     h2 {
-      color: #388e3c;
+      color: #ffdd00;
+      text-shadow: 1px 1px 3px black;
+      margin-top: 20px;
+      margin-bottom: 10px;
     }
+
+    /* ===== Listas e checkboxes ===== */
     ul {
       list-style: none;
       padding-left: 0;
     }
+
     li {
+      background: rgba(255,255,255,0.9);
+      color: #222;
+      padding: 10px;
+      border-radius: 8px;
       margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
     }
+
+    input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+
     label {
       font-size: 1.1em;
+      cursor: pointer;
     }
-    .section {
-      margin-top: 30px;
-    }
+
+    /* ===== Link voltar ===== */
     .back-link {
-      margin-top: 40px;
-      display: block;
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #ffdd00;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px black;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h1>🟩 Quarta – Pernas + Glúteos + Abdômen</h1>
 
-  <h1>🟩 Quarta – Pernas + Glúteos + Abdômen</h1>
+    <div class="section">
+      <h2>Pernas + Glúteos</h2>
+      <ul>
+        <li><input type="checkbox" id="ex1"> <label for="ex1">Agachamento livre – 4x10</label></li>
+        <li><input type="checkbox" id="ex2"> <label for="ex2">Leg press 45º – 3x12</label></li>
+        <li><input type="checkbox" id="ex3"> <label for="ex3">Cadeira extensora – 3x15</label></li>
+        <li><input type="checkbox" id="ex4"> <label for="ex4">Cadeira flexora – 3x15</label></li>
+        <li><input type="checkbox" id="ex5"> <label for="ex5">Stiff com halteres – 3x12</label></li>
+        <li><input type="checkbox" id="ex6"> <label for="ex6">Elevação de quadril – 3x20</label></li>
+      </ul>
+    </div>
 
-  <div class="section">
-    <h2>Pernas + Glúteos</h2>
-    <ul>
-      <li><input type="checkbox" id="ex1"> <label for="ex1">Agachamento livre – 4x10</label></li>
-      <li><input type="checkbox" id="ex2"> <label for="ex2">Leg press 45º – 3x12</label></li>
-      <li><input type="checkbox" id="ex3"> <label for="ex3">Cadeira extensora – 3x15</label></li>
-      <li><input type="checkbox" id="ex4"> <label for="ex4">Cadeira flexora – 3x15</label></li>
-      <li><input type="checkbox" id="ex5"> <label for="ex5">Stiff com halteres – 3x12</label></li>
-      <li><input type="checkbox" id="ex6"> <label for="ex6">Elevação de quadril – 3x20</label></li>
-    </ul>
+    <div class="section">
+      <h2>Abdômen</h2>
+      <ul>
+        <li><input type="checkbox" id="ab1"> <label for="ab1">Crunch no solo com peso – 3x20</label></li>
+        <li><input type="checkbox" id="ab2"> <label for="ab2">Prancha com avanço – 3x12 por perna</label></li>
+      </ul>
+    </div>
+
+    <a class="back-link" href="index.html">⬅ Voltar para o Início</a>
   </div>
-
-  <div class="section">
-    <h2>Abdômen</h2>
-    <ul>
-      <li><input type="checkbox" id="ab1"> <label for="ab1">Crunch no solo com peso – 3x20</label></li>
-      <li><input type="checkbox" id="ab2"> <label for="ab2">Prancha com avanço – 3x12 por perna</label></li>
-    </ul>
-  </div>
-
-  <a class="back-link" href="index.html">⬅ Voltar para o Início</a>
-
 </body>
 </html>
