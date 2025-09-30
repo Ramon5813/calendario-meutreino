@@ -6,65 +6,115 @@
   <title>Treino - Sexta-feira</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-image: url('xmen-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      margin: 0;
       padding: 20px;
-      background: #f3e5f5;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      color: #e1bee7;
     }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      padding: 20px;
+      background: rgba(0,0,0,0.75);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+    }
+
     h1 {
-      color: #8e24aa;
+      text-align: center;
+      color: #e1bee7;
+      text-shadow: 2px 2px 5px black;
+      margin-bottom: 20px;
     }
+
     h2 {
-      color: #7b1fa2;
+      color: #e1bee7;
+      text-shadow: 1px 1px 3px black;
+      margin-top: 20px;
+      margin-bottom: 10px;
     }
+
     ul {
       list-style: none;
       padding-left: 0;
     }
+
     li {
+      background: rgba(255,255,255,0.9);
+      color: #222;
+      padding: 10px;
+      border-radius: 8px;
       margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
     }
+
+    input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+
     label {
       font-size: 1.1em;
+      cursor: pointer;
     }
-    .section {
-      margin-top: 30px;
-    }
+
     .back-link {
-      margin-top: 40px;
-      display: block;
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #e1bee7;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px black;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h1>🟪 Sexta – Ombros + Abdômen + Cardio</h1>
 
-  <h1>🟪 Sexta – Ombros + Abdômen + Cardio</h1>
+    <div class="section">
+      <h2>Ombros</h2>
+      <ul>
+        <li><input type="checkbox" id="ombro1"> <label for="ombro1">Elevação lateral – 3x12</label></li>
+        <li><input type="checkbox" id="ombro2"> <label for="ombro2">Desenvolvimento com halteres – 3x12</label></li>
+        <li><input type="checkbox" id="ombro3"> <label for="ombro3">Elevação frontal com barra – 3x12</label></li>
+        <li><input type="checkbox" id="ombro4"> <label for="ombro4">Encolhimento de ombros – 3x20</label></li>
+      </ul>
+    </div>
 
-  <div class="section">
-    <h2>Ombros</h2>
-    <ul>
-      <li><input type="checkbox" id="ombro1"> <label for="ombro1">Elevação lateral – 3x12</label></li>
-      <li><input type="checkbox" id="ombro2"> <label for="ombro2">Desenvolvimento com halteres – 3x12</label></li>
-      <li><input type="checkbox" id="ombro3"> <label for="ombro3">Elevação frontal com barra – 3x12</label></li>
-      <li><input type="checkbox" id="ombro4"> <label for="ombro4">Encolhimento de ombros – 3x20</label></li>
-    </ul>
+    <div class="section">
+      <h2>Abdômen</h2>
+      <ul>
+        <li><input type="checkbox" id="abdomen1"> <label for="abdomen1">Abdominal inferior na barra (pernas suspensas) – 3x15</label></li>
+        <li><input type="checkbox" id="abdomen2"> <label for="abdomen2">Russian twist com anilha – 3x30</label></li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Cardio</h2>
+      <ul>
+        <li><input type="checkbox" id="cardio1"> <label for="cardio1">Esteira: 20-25 min leve ou moderado (pós treino)</label></li>
+      </ul>
+    </div>
+
+    <a class="back-link" href="index.html">⬅ Voltar para o Início</a>
   </div>
-
-  <div class="section">
-    <h2>Abdômen</h2>
-    <ul>
-      <li><input type="checkbox" id="abdomen1"> <label for="abdomen1">Abdominal inferior na barra (pernas suspensas) – 3x15</label></li>
-      <li><input type="checkbox" id="abdomen2"> <label for="abdomen2">Russian twist com anilha – 3x30</label></li>
-    </ul>
-  </div>
-
-  <div class="section">
-    <h2>Cardio</h2>
-    <ul>
-      <li><input type="checkbox" id="cardio1"> <label for="cardio1">Esteira: 20-25 min leve ou moderado (pós treino)</label></li>
-    </ul>
-  </div>
-
-  <a class="back-link" href="index.html">⬅ Voltar para o Início</a>
-
 </body>
 </html>
