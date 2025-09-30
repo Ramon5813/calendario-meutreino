@@ -2,33 +2,64 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Treino - Sábado / Domingo</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-image: url('xmen-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      margin: 0;
       padding: 20px;
-      background: #a7ffeb; /* verde água */
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
       color: #004d40;
     }
-    h1 {
-      margin-bottom: 10px;
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      padding: 20px;
+      background: rgba(0,0,0,0.75);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.8);
     }
-    #exercicios-lista {
-      list-style: none;
-      padding: 0;
-      max-width: 500px;
+
+    h1 {
+      text-align: center;
+      color: #a7ffeb;
+      text-shadow: 2px 2px 5px black;
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: #a7ffeb;
+      text-shadow: 1px 1px 3px black;
+      text-align: center;
       margin-bottom: 20px;
     }
-    #exercicios-lista li {
-      background: #b2f5ea;
-      margin-bottom: 8px;
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    li {
+      background: rgba(167, 255, 235, 0.9);
+      color: #004d40;
       padding: 10px;
       border-radius: 8px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
     }
-    #exercicios-lista li input[type="text"] {
+
+    li input[type="text"] {
       flex: 1;
       border: none;
       background: transparent;
@@ -36,7 +67,8 @@
       color: #004d40;
       outline: none;
     }
-    #exercicios-lista li button {
+
+    li button {
       background: #004d40;
       color: white;
       border: none;
@@ -46,10 +78,13 @@
       margin-left: 8px;
       transition: background 0.3s ease;
     }
-    #exercicios-lista li button:hover {
+
+    li button:hover {
       background: #00281a;
     }
+
     #adicionar-btn {
+      width: 100%;
       padding: 10px 20px;
       font-size: 1em;
       border-radius: 10px;
@@ -58,39 +93,45 @@
       color: white;
       cursor: pointer;
       transition: background 0.3s ease;
+      margin-top: 10px;
     }
+
     #adicionar-btn:hover {
       background: #00281a;
     }
+
     .back-link {
       display: inline-block;
-      margin-top: 30px;
-      color: #004d40;
+      margin-top: 20px;
+      color: #a7ffeb;
       text-decoration: none;
       font-weight: bold;
+      text-shadow: 1px 1px 3px black;
     }
+
     .back-link:hover {
       text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <h1>🌊 Sábado / Domingo – Agenda de Treino</h1>
-  <p>Adicione e edite os exercícios ou atividades que realizou neste dia. Seus dados ficam salvos no navegador.</p>
+  <div class="container">
+    <h1>🌊 Sábado / Domingo – Agenda de Treino</h1>
+    <p>Adicione e edite os exercícios ou atividades realizadas. Seus dados ficam salvos no navegador.</p>
 
-  <ul id="exercicios-lista">
-    <!-- Itens vão aparecer aqui -->
-  </ul>
+    <ul id="exercicios-lista">
+      <!-- Itens vão aparecer aqui -->
+    </ul>
 
-  <button id="adicionar-btn">+ Adicionar Exercício</button>
+    <button id="adicionar-btn">+ Adicionar Exercício</button>
 
-  <a class="back-link" href="index.html">⬅ Voltar para o Início</a>
+    <a class="back-link" href="index.html">⬅ Voltar para o Início</a>
+  </div>
 
   <script>
     const lista = document.getElementById('exercicios-lista');
     const botaoAdicionar = document.getElementById('adicionar-btn');
 
-    // Função para salvar no localStorage
     function salvarLista() {
       const itens = [];
       document.querySelectorAll('#exercicios-lista li input[type="text"]').forEach(input => {
@@ -99,7 +140,6 @@
       localStorage.setItem('sabadoDomingoTreino', JSON.stringify(itens));
     }
 
-    // Função para criar um item novo na lista
     function criarItem(texto = '') {
       const li = document.createElement('li');
 
@@ -123,26 +163,22 @@
       lista.appendChild(li);
     }
 
-    // Carregar lista salva
     function carregarLista() {
       const dados = localStorage.getItem('sabadoDomingoTreino');
       if (dados) {
         const itens = JSON.parse(dados);
         itens.forEach(texto => {
-          if(texto) criarItem(texto);
+          if (texto) criarItem(texto);
         });
       }
     }
 
-    // Evento botão adicionar
     botaoAdicionar.addEventListener('click', () => {
       criarItem('');
       salvarLista();
     });
 
-    // Inicializa
     carregarLista();
   </script>
 </body>
 </html>
-
