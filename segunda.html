@@ -5,37 +5,86 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Segunda - Treino</title>
   <style>
+    /* ===== Corpo da página ===== */
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-image: url('xmen-bg.jpg'); /* imagem de fundo X-Men */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      margin: 0;
       padding: 20px;
-      background: #fdecea; /* vermelho claro suave */
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      color: #ffdd00;
     }
+
+    /* ===== Container principal ===== */
+    .container {
+      max-width: 600px;
+      width: 100%;
+      padding: 20px;
+      background: rgba(0,0,0,0.75);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+    }
+
+    /* ===== Títulos ===== */
     h1 {
-      color: #b71c1c; /* vermelho escuro para combinar */
+      text-align: center;
+      color: #ffdd00;
+      text-shadow: 2px 2px 5px black;
+      margin-bottom: 20px;
     }
+
     h2 {
-      color: #d32f2f; /* tom intermediário */
+      color: #ffdd00;
+      text-shadow: 1px 1px 3px black;
+      margin-top: 20px;
+      margin-bottom: 10px;
     }
+
+    /* ===== Listas e checkboxes ===== */
     ul {
       list-style: none;
       padding-left: 0;
     }
+
     li {
+      background: rgba(255,255,255,0.9);
+      color: #222;
+      padding: 10px;
+      border-radius: 8px;
       margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
     }
+
+    input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+
     label {
       font-size: 1.1em;
+      cursor: pointer;
     }
-    .section {
-      margin-top: 30px;
-    }
+
+    /* ===== Link voltar ===== */
     .back-link {
-      margin-top: 40px;
-      display: block;
-      color: #b71c1c;
+      display: inline-block;
+      margin-top: 20px;
       text-decoration: none;
+      color: #ffdd00;
       font-weight: bold;
+      text-shadow: 1px 1px 3px black;
     }
+
     .back-link:hover {
       text-decoration: underline;
     }
@@ -69,5 +118,3 @@
   </div>
 </body>
 </html>
-
-
