@@ -259,5 +259,128 @@
     setTimeout(()=>notificar("💪 Hora do treino X-Men!"),5000);
 
   </script>
+  /* ===== Tema Claro/Escuro ===== */
+const btnTema = document.getElementById('btn-tema');
+btnTema.addEventListener('click', () => {
+  document.body.classList.toggle('tema-claro');
+  localStorage.setItem('tema', document.body.classList.contains('tema-claro') ? 'claro' : 'escuro');
+});
+if(localStorage.getItem('tema') === 'claro') document.body.classList.add('tema-claro');
+
+/* ===== Gamificação ===== */
+const painelPontos = document.getElementById('painel-pontos');
+const medalhasEl = document.getElementById('medalhas');
+
+function atualizarPontos() {
+  const chave = `diasMarcados-${mesAtual}-${anoAtual}`;
+  const diasMarcados = JSON.parse(localStorage.getItem(chave)) || [];
+  const pontos = diasMarcados.length;
+  
+  // Medalhas
+  let medalha = '';
+  if(pontos >= 20) medalha = '🏆 Mestre X-Men';
+  else if(pontos >= 10) medalha = '🥇 Treinador X-Men';
+  else if(pontos >= 5) medalha = '🥈 Aprendiz X-Men';
+  
+  painelPontos.textContent = `🏅 Pontos: ${pontos}`;
+  medalhasEl.textContent = `Medalhas: ${medalha || 'Nenhuma'}`;
+}
+
+/* ===== Calendário ===== */
+const mesAnoEl = document.getElementById('mes-ano');
+const diasMesEl = document.getElementById('dias-mes');
+const btnAnterior = document.getElementById('btn-anterior');
+const btnProximo = document.getElementById('btn-proximo');
+
+let dataAtual = new Date();
+let mesAtual = dataAtual.getMonth();
+let anoAtual = dataAtual.getFullYear();
+
+function carregarCalendario(mes, ano) {
+  mesAnoEl.textContent = `${obterNomeMes(mes)} ${ano}`;
+  diasMesEl.innerHTML = '';
+
+  const primeiraData = new Date(ano, mes, 1);
+  const ultimoDia = new Date(ano, mes + 1, 0).getDate();
+  const diaSemanaInicio = primeiraData.getDay();
+
+  // Dias vazios
+  for(let i=0;i<diaSemanaInicio;i++){
+    const diaVazio = document.createElement('div');
+    diaVazio.classList.add('dia','vazio');
+    diasMesEl.appendChild(diaVazio);
+  }
+
+  const chaveStorage = `diasMarcados-${mes}-${ano}`;
+  const dadosMarcados = JSON.parse(localStorage.getItem(chaveStorage)) || [];
+
+  for(let dia=1; dia<=ultimoDia; dia++){
+    const diaEl = document.createElement('div');
+    diaEl.classList.add('dia');
+    diaEl.textContent = dia;
+
+    if(dadosMarcados.includes(dia)) diaEl.classList.add('marcado');
+    if(dia===dataAtual.getDate() && mes===dataAtual.getMonth() && ano===dataAtual.getFullYear()) diaEl.classList.add('hoje');
+
+    diaEl.addEventListener('click', ()=>{
+      if(diaEl.classList.contains('marcado')){
+        diaEl.classList.remove('marcado');
+        removerDia(dia, chaveStorage);
+      } else {
+        diaEl.classList.add('marcado');
+        adicionarDia(dia, chaveStorage);
+      }
+      atualizarPontos();
+    });
+
+    diasMesEl.appendChild(diaEl);
+  }
+  atualizarPontos();
+}
+
+function adicionarDia(dia,chave){
+  let arr = JSON.parse(localStorage.getItem(chave)) || [];
+  if(!arr.includes(dia)) arr.push(dia);
+  localStorage.setItem(chave,JSON.stringify(arr));
+}
+
+function removerDia(dia,chave){
+  let arr = JSON.parse(localStorage.getItem(chave)) || [];
+  arr = arr.filter(d=>d!==dia);
+  localStorage.setItem(chave,JSON.stringify(arr));
+}
+
+function obterNomeMes(mes){
+  return ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'][mes];
+}
+
+btnAnterior.addEventListener('click',()=>{
+  mesAtual--;
+  if(mesAtual<0){ mesAtual=11; anoAtual--; }
+  carregarCalendario(mesAtual,anoAtual);
+});
+btnProximo.addEventListener('click',()=>{
+  mesAtual++;
+  if(mesAtual>11){ mesAtual=0; anoAtual++; }
+  carregarCalendario(mesAtual,anoAtual);
+});
+
+carregarCalendario(mesAtual,anoAtual);
+
+/* ===== Notificações ===== */
+function notificar(texto){
+  if(Notification.permission==='granted'){
+    new Notification(texto);
+  } else if(Notification.permission!=='denied'){
+    Notification.requestPermission().then(p=>{
+      if(p==='granted') new Notification(texto);
+    });
+  }
+}
+
+// Exemplo de lembrete diário (5s após carregar, você pode trocar para horários reais)
+setTimeout(()=>notificar("💪 Hora do treino X-Men!"),5000);
+
 </body>
 </html>
+
