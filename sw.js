@@ -1,6 +1,7 @@
-const CACHE_NAME = 'xmen-treinos-v2'; // versão do cache
-const STATIC_ASSETS = [
-  '/',
+// sw.js - Service Worker X-Men Treinos
+const CACHE_NAME = 'xmen-treinos-v1';
+const URLS_TO_CACHE = [
+  '/', // index.html
   '/index.html',
   '/segunda.html',
   '/terca.html',
@@ -13,53 +14,63 @@ const STATIC_ASSETS = [
   '/style.css',
   '/xmen-bg.jpg',
   '/icons/xmen-192.png',
-  '/icons/xmen-512.png',
-  '/offline.html'
+  '/icons/xmen-512.png'
 ];
 
-// Instalando SW e cacheando arquivos estáticos
+// Instalando Service Worker e cacheando arquivos
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(STATIC_ASSETS))
+      .then(cache => {
+        console.log('Arquivos em cache');
+        return cache.addAll(URLS_TO_CACHE);
+      })
       .then(() => self.skipWaiting())
   );
 });
 
-// Ativando SW e limpando caches antigos
+// Ativação do Service Worker e limpeza de caches antigos
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(keys.map(key => {
-        if (key !== CACHE_NAME) return caches.delete(key);
-      }))
+      Promise.all(
+        keys.map(key => {
+          if (key !== CACHE_NAME) {
+            console.log('Deletando cache antigo:', key);
+            return caches.delete(key);
+          }
+        })
+      )
     )
   );
   self.clients.claim();
 });
 
-// Fetch: cache primeiro, depois rede, com fallback offline
+// Interceptando requisições para servir do cache ou da rede
 self.addEventListener('fetch', event => {
-  if (event.request.method !== 'GET') return;
-
   event.respondWith(
-    caches.match(event.request).then(cachedResponse => {
-      if (cachedResponse) return cachedResponse;
-
-      return fetch(event.request)
-        .then(networkResponse => {
-          return caches.open(CACHE_NAME).then(cache => {
-            // Salva no cache para uso futuro
-            cache.put(event.request, networkResponse.clone());
+    caches.match(event.request)
+      .then(response => {
+        if (response) {
+          return response; // retorna do cache
+        }
+        // busca da rede e adiciona ao cache
+        return fetch(event.request).then(networkResponse => {
+          if(!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
             return networkResponse;
-          });
-        })
-        .catch(() => {
-          // Se falhar e não estiver em cache, retorna offline.html
-          if (event.request.destination === 'document') {
-            return caches.match('/offline.html');
           }
+          const responseClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, responseClone);
+          });
+          return networkResponse;
         });
-    })
+      })
+      .catch(() => {
+        // fallback se offline e página não estiver no cache
+        if (event.request.mode === 'navigate') {
+          return caches.match('/index.html');
+        }
+      })
   );
 });
