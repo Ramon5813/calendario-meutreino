@@ -3,237 +3,427 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Treinos & Calendário</title>
-
-  <!-- Fonte estilo HQ -->
+  <title>X-Men Treinos & Calendário</title>
   <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
-
   <style>
+    /* ===== Corpo da página ===== */
     body {
-      font-family: 'Bangers', cursive;
-      background: linear-gradient(135deg, #ff4081, #651fff);
+      font-family: 'Bangers', sans-serif;
+      background-image: url('xmen-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
       margin: 0;
-      padding: 0;
-      color: #fff;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: auto;
       padding: 20px;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      text-shadow: 3px 3px 0px #000;
-      color: #ffeb3b;
-    }
-
-    h2 {
-      font-size: 2rem;
-      margin-top: 30px;
-      text-shadow: 2px 2px 0px #000;
-      color: #00e676;
-    }
-
-    h3 {
-      font-size: 1.5rem;
-      margin-top: 15px;
-      text-shadow: 2px 2px 0px #000;
-      color: #ff9100;
-    }
-
-    /* MENU */
-    .menu {
+      color: #ffdd00;
       display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 15px;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ===== Container ===== */
+    .container {
+      max-width: 600px;
+      width: 100%;
+      margin: 20px auto;
+      padding: 20px;
+      background: rgba(0,0,0,0.75);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+    }
+
+    h1, h2 {
+      color: #ffdd00;
+      text-align: center;
+      text-shadow: 2px 2px 5px black;
       margin-bottom: 20px;
+    }
+
+    /* ===== Menu de Treinos ===== */
+    .menu {
+      list-style: none;
+      padding: 0;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .menu li {
+      margin: 12px 0;
     }
 
     .menu a {
-      background: #00bcd4;
-      padding: 12px 25px;
-      text-decoration: none;
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #ff4444;
       color: #fff;
+      text-decoration: none;
       border-radius: 12px;
-      font-size: 1.2rem;
-      transition: 0.3s;
-      box-shadow: 3px 3px 0px #000;
+      font-size: 1.2em;
+      font-weight: bold;
+      transition: all 0.3s ease;
     }
 
     .menu a:hover {
-      background: #ff5722;
-      transform: scale(1.1);
+      background-color: #cc0000;
+      transform: scale(1.05);
     }
 
-    /* CHECKBOX TREINOS */
-    label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 1.2rem;
-      margin: 10px 0;
-      cursor: pointer;
+    .menu a.sabado-domingo {
+      background-color: #4444ff;
+      color: #ffdd00;
     }
 
-    input[type="checkbox"] {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-      accent-color: #ffeb3b;
-    }
-
-    /* CALENDÁRIO */
+    /* ===== Calendário ===== */
     #calendario {
-      margin-top: 40px;
+      max-width: 360px;
+      width: 100%;
+      background: rgba(0,0,0,0.8);
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.8);
       padding: 20px;
-      background: rgba(0,0,0,0.4);
-      border-radius: 20px;
-      box-shadow: 5px 5px 0px #000;
+      margin-bottom: 30px;
     }
 
     #mes-ano {
-      font-size: 2rem;
-      margin-bottom: 15px;
-      color: #ffeb3b;
-      text-shadow: 2px 2px 0px #000;
-    }
-
-    #navegacao {
-      margin-bottom: 15px;
-    }
-
-    #navegacao button {
-      background: #ff4081;
-      border: none;
-      color: white;
-      font-size: 1.2rem;
-      padding: 8px 18px;
-      border-radius: 10px;
-      cursor: pointer;
-      margin: 0 8px;
-      transition: 0.3s;
-      box-shadow: 3px 3px 0px #000;
-    }
-
-    #navegacao button:hover {
-      background: #651fff;
-      transform: scale(1.1);
+      text-align: center;
+      font-size: 1.6em;
+      margin-bottom: 12px;
+      color: #ffdd00;
+      text-shadow: 2px 2px 4px #000;
     }
 
     #dias-semana, #dias-mes {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 8px;
     }
 
     #dias-semana div {
+      text-align: center;
       font-weight: bold;
-      color: #00e676;
-      text-shadow: 1px 1px 0px #000;
+      color: #ff4444;
+      margin-bottom: 5px;
     }
 
     .dia {
-      background: #ff9100;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 2px 2px 0px #000;
+      background: rgba(255,255,255,0.15);
+      padding: 10px 0;
+      margin: 2px;
+      border-radius: 8px;
+      text-align: center;
       cursor: pointer;
-      transition: 0.2s;
+      transition: all 0.3s ease;
+      user-select: none;
     }
 
     .dia:hover {
-      background: #ff5722;
-      transform: scale(1.05);
+      background: rgba(255,255,255,0.35);
+      color: #ffdd00;
+      transform: scale(1.08);
     }
 
-    .hoje {
-      background: #ffeb3b !important;
+    .dia.marcado {
+      background: #ffdd00;
       color: #000;
+      font-weight: bold;
     }
 
-    .vazio {
+    .dia.hoje {
+      border: 2px solid #ff4444;
+    }
+
+    .dia.vazio {
       background: transparent;
-      box-shadow: none;
       cursor: default;
     }
 
-    /* FOOTER */
-    footer {
-      margin-top: 40px;
-      padding: 20px;
-      background: rgba(0,0,0,0.5);
-      border-radius: 12px;
+    #navegacao {
       text-align: center;
-      font-size: 1rem;
-      color: #ffeb3b;
-      text-shadow: 1px 1px 0px #000;
+      margin-top: 10px;
     }
 
-    /* RESPONSIVIDADE */
-    @media (max-width: 600px) {
-      h1 { font-size: 2.2rem; }
-      h2 { font-size: 1.5rem; }
-      h3 { font-size: 1.2rem; }
-      .menu a { font-size: 1rem; padding: 10px 18px; }
-      #mes-ano { font-size: 1.5rem; }
-      .dia { padding: 10px; font-size: 0.9rem; }
+    #navegacao button {
+      background: #ff4444;
+      border: none;
+      color: #fff;
+      padding: 8px 14px;
+      margin: 5px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #navegacao button:hover {
+      background: #cc0000;
+      transform: scale(1.1);
+    }
+
+    /* ===== Checklists ===== */
+    ul.checklist {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 30px;
+    }
+
+    ul.checklist li {
+      background: rgba(255,255,255,0.9);
+      color: #222;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+
+    ul.checklist li input[type="text"] {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 1em;
+      color: #004d40;
+      outline: none;
+    }
+
+    ul.checklist li button {
+      background: #004d40;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 8px;
+    }
+
+    ul.checklist li button:hover {
+      background: #00281a;
+    }
+
+    #adicionar-btn {
+      width: 100%;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 10px;
+      border: none;
+      background: #004d40;
+      color: white;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    #adicionar-btn:hover {
+      background: #00281a;
+    }
+
+    /* ===== Dietas / Receitas ===== */
+    form.dieta-form {
+      margin-bottom: 30px;
+    }
+
+    form.dieta-form textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 8px;
+      border: 1px solid #ffdd00;
+      background: rgba(255,255,255,0.9);
+      color: #222;
+      resize: vertical;
+      margin-bottom: 10px;
+    }
+
+    form.dieta-form button {
+      background: #ff4444;
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    form.dieta-form button:hover {
+      background: #cc0000;
+    }
+
+    .lista-dietas li {
+      background: rgba(255,255,255,0.9);
+      color: #222;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      position: relative;
+      white-space: pre-wrap;
+    }
+
+    .actions {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    .actions button {
+      margin-left: 5px;
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 1.1em;
+      color: #ffdd00;
+      text-shadow: 2px 2px 5px #000;
+    }
+
+    /* ===== Links voltar ===== */
+    .voltar {
+      display: inline-block;
+      margin-top: 10px;
+      text-decoration: none;
+      color: #ffdd00;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px black;
+    }
+
+    .voltar:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== Responsividade ===== */
+    @media(max-width: 400px){
+      .menu a, #navegacao button {
+        padding: 10px 12px;
+        font-size: 1em;
+      }
+      h1 { font-size: 1.8em; }
+      h2 { font-size: 1.5em; }
     }
   </style>
 </head>
+
 <body>
 
-  <div class="container">
-    <h1>Treinos & Calendário</h1>
+  <h1>Calendário + Treinos Semanais</h1>
 
-    <!-- Menu -->
-    <nav class="menu">
-      <a href="#">Segunda</a>
-      <a href="#">Terça</a>
-      <a href="#">Quarta</a>
-      <a href="#">Quinta</a>
-      <a href="#">Sexta</a>
-      <a href="#">Sábado</a>
-      <a href="#">Domingo</a>
-    </nav>
+  <!-- Menu da Semana -->
+  <ul class="menu">
+    <li><a href="segunda.html">Segunda</a></li>
+    <li><a href="terca.html">Terça</a></li>
+    <li><a href="quarta.html">Quarta</a></li>
+    <li><a href="quinta.html">Quinta</a></li>
+    <li><a href="sexta.html">Sexta</a></li>
+    <li><a href="sabado-domingo.html" class="sabado-domingo">Sábado / Domingo</a></li>
+    <li><a href="observacoes.html">Observações</a></li>
+    <li><a href="dietas.html">Dietas</a></li>
+  </ul>
 
-    <!-- Exemplos de treinos -->
-    <h2>Treinos do Dia</h2>
-    <label><input type="checkbox"> Flexões</label>
-    <label><input type="checkbox"> Corrida</label>
-    <label><input type="checkbox"> Prancha</label>
-    <label><input type="checkbox"> Agachamento</label>
-
-    <!-- Calendário -->
-    <div id="calendario">
-      <div id="mes-ano">Outubro 2025</div>
-      <div id="navegacao">
-        <button>&lt; Anterior</button>
-        <button>Próximo &gt;</button>
-      </div>
-      <div id="dias-semana">
-        <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div>
-        <div>Qui</div><div>Sex</div><div>Sáb</div>
-      </div>
-      <div id="dias-mes">
-        <div class="vazio"></div>
-        <div class="dia">1</div>
-        <div class="dia">2</div>
-        <div class="dia hoje">3</div>
-        <div class="dia">4</div>
-        <div class="dia">5</div>
-        <div class="dia">6</div>
-      </div>
+  <!-- Calendário -->
+  <div id="calendario">
+    <div id="mes-ano"></div>
+    <div id="dias-semana">
+      <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
     </div>
-
-    <footer>
-      © 2025 - Seu projeto de treinos em estilo HQ!
-    </footer>
+    <div id="dias-mes"></div>
+    <div id="navegacao">
+      <button id="btn-anterior">◀ Mês Anterior</button>
+      <button id="btn-proximo">Mês Seguinte ▶</button>
+    </div>
   </div>
+
+  <!-- Footer -->
+  <footer>✨ Treine como um X-Men! ✨</footer>
+
+  <script>
+    // ===== Calendário =====
+    const mesAnoEl = document.getElementById('mes-ano');
+    const diasMesEl = document.getElementById('dias-mes');
+    const btnAnterior = document.getElementById('btn-anterior');
+    const btnProximo = document.getElementById('btn-proximo');
+
+    let dataAtual = new Date();
+    let mesAtual = dataAtual.getMonth();
+    let anoAtual = dataAtual.getFullYear();
+
+    function carregarCalendario(mes, ano) {
+      mesAnoEl.textContent = `${obterNomeMes(mes)} ${ano}`;
+      diasMesEl.innerHTML = '';
+
+      const primeiraData = new Date(ano, mes, 1);
+      const ultimoDia = new Date(ano, mes + 1, 0).getDate();
+      const diaSemanaInicio = primeiraData.getDay();
+
+      for (let i = 0; i < diaSemanaInicio; i++) {
+        const diaVazio = document.createElement('div');
+        diaVazio.classList.add('dia', 'vazio');
+        diasMesEl.appendChild(diaVazio);
+      }
+
+      const chaveStorage = `diasMarcados-${ano}-${mes}`;
+      const dadosMarcados = JSON.parse(localStorage.getItem(chaveStorage)) || [];
+
+      for (let dia = 1; dia <= ultimoDia; dia++) {
+        const diaEl = document.createElement('div');
+        diaEl.classList.add('dia');
+        diaEl.textContent = dia;
+
+        if (dadosMarcados.includes(dia)) {
+          diaEl.classList.add('marcado');
+        }
+
+        if (dia === dataAtual.getDate() && mes === dataAtual.getMonth() && ano === dataAtual.getFullYear()) {
+          diaEl.classList.add('hoje');
+        }
+
+        diaEl.addEventListener('click', () => {
+          if (diaEl.classList.contains('marcado')) {
+            diaEl.classList.remove('marcado');
+            removerDia(dia, chaveStorage);
+          } else {
+            diaEl.classList.add('marcado');
+            adicionarDia(dia, chaveStorage);
+          }
+        });
+
+        diasMesEl.appendChild(diaEl);
+      }
+    }
+
+    function adicionarDia(dia, chave) {
+      let arr = JSON.parse(localStorage.getItem(chave)) || [];
+      if (!arr.includes(dia)) {
+        arr.push(dia);
+        localStorage.setItem(chave, JSON.stringify(arr));
+      }
+    }
+
+    function removerDia(dia, chave) {
+      let arr = JSON.parse(localStorage.getItem(chave)) || [];
+      arr = arr.filter(d => d !== dia);
+      localStorage.setItem(chave, JSON.stringify(arr));
+    }
+
+    function obterNomeMes(mes) {
+      const nomes = [
+        'Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+        'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'
+      ];
+      return nomes[mes];
+    }
+
+    btnAnterior.addEventListener('click', () => {
+      mesAtual--;
+      if (mesAtual < 0) { mesAtual = 11; anoAtual--; }
+      carregarCalendario(mesAtual, anoAtual);
+    });
+
+    btnProximo.addEventListener('click', () => {
+      mesAtual++;
+      if (mesAtual > 11) { mesAtual = 0; anoAtual++; }
+      carregarCalendario(mesAtual, anoAtual);
+    });
+
+    carregarCalendario(mesAtual, anoAtual);
+  </script>
 
 </body>
 </html>
