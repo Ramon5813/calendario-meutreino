@@ -1,44 +1,51 @@
-// sw.js - Service Worker para X-Men Treinos
-
-const CACHE_NAME = 'x-treinos-cache-v1';
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/xmen-bg.jpg',
-  '/icons/xmen-192.png',
-  '/icons/xmen-512.png'
-];
-
-// Instalando Service Worker e cacheando arquivos
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Arquivos em cache');
-        return cache.addAll(urlsToCache);
-      })
-  );
-});
-
-// Ativação do Service Worker
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.filter(name => name !== CACHE_NAME)
-                  .map(name => caches.delete(name))
-      );
-    })
-  );
-});
-
-// Interceptando requisições para servir do cache
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-          .then(response => {
-            return response || fetch(event.request);
-          })
-  );
-});
+{
+  "name": "X-Men Treinos",
+  "short_name": "X-Treinos",
+  "description": "Acompanhe seus treinos, dietas e conquiste medalhas estilo X-Men!",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#ffdd00",
+  "orientation": "portrait",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icons/xmen-72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/xmen-96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/xmen-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/xmen-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/xmen-256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/xmen-384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/xmen-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["fitness", "health", "games"],
+  "lang": "pt-BR",
+  "prefer_related_applications": false
+}
