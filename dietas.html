@@ -2,44 +2,45 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dietas & Receitas</title>
+
+  <!-- Fonte estilo HQ -->
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+
   <style>
-    /* ===== Corpo da página ===== */
     body {
-      font-family: 'Comic Sans MS', cursive, sans-serif; /* estilo HQ */
-      background-image: url('xmen-bg.jpg'); /* imagem dos X-Men */
+      font-family: 'Bangers', sans-serif;
+      background-image: url('xmen-bg.jpg');
       background-size: cover;
       background-position: center;
-      background-repeat: no-repeat;
       background-attachment: fixed;
       margin: 0;
       padding: 20px;
       color: #ffdd00;
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
     }
 
-    /* ===== Container principal ===== */
     .container {
       max-width: 600px;
       width: 100%;
       padding: 20px;
-      background: rgba(0,0,0,0.75); /* semi-transparente */
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+      background: rgba(0,0,0,0.8);
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.8);
     }
 
-    /* ===== Títulos ===== */
     h2 {
       text-align: center;
       margin-bottom: 20px;
       color: #ffdd00;
-      text-shadow: 2px 2px 5px black;
+      text-shadow: 3px 3px 6px black;
+      font-size: 2em;
     }
 
-    /* ===== Formulário ===== */
     form {
       margin-bottom: 30px;
     }
@@ -55,21 +56,20 @@
       width: 100%;
       padding: 10px;
       font-size: 1em;
-      border-radius: 8px;
+      border-radius: 10px;
       border: 1px solid #ffdd00;
       background: rgba(255,255,255,0.9);
       color: #222;
       resize: vertical;
     }
 
-    /* ===== Botões ===== */
     button, .btn {
-      background: #ff4444; /* vermelho estilo HQ */
+      background: #ff4444;
       color: white;
       border: none;
       padding: 8px 14px;
       font-size: 0.9em;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       transition: transform 0.2s ease, background-color 0.3s ease;
       margin-left: 5px;
@@ -88,42 +88,54 @@
       background-color: #424242;
     }
 
-    /* ===== Lista de dietas ===== */
     .lista-dietas {
       list-style-type: none;
       padding: 0;
     }
 
     .lista-dietas li {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255,255,255,0.15);
       color: #222;
-      margin-bottom: 10px;
-      padding: 10px;
-      border-radius: 8px;
+      margin-bottom: 12px;
+      padding: 12px 15px;
+      border-radius: 10px;
       position: relative;
       white-space: pre-wrap;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.6);
+      transition: transform 0.2s ease, background 0.2s ease;
     }
 
-    /* ===== Ações dentro da lista ===== */
+    .lista-dietas li:hover {
+      background: rgba(255,255,255,0.3);
+      transform: scale(1.03);
+    }
+
     .actions {
       position: absolute;
       top: 10px;
       right: 10px;
     }
 
-    /* ===== Links voltar ===== */
     .voltar {
       display: inline-block;
       margin-top: 20px;
       text-decoration: none;
       color: #ffdd00;
       font-weight: bold;
-      text-shadow: 1px 1px 3px black;
+      text-shadow: 2px 2px 5px black;
+      font-size: 1.1em;
+      transition: transform 0.2s ease;
     }
 
     .voltar:hover {
       text-decoration: underline;
+      transform: scale(1.05);
+    }
+
+    @media(max-width: 400px) {
+      h2 { font-size: 1.5em; }
+      .lista-dietas li { font-size: 1em; padding: 10px; }
+      .voltar { font-size: 1em; }
     }
   </style>
 </head>
