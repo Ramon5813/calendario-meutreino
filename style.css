@@ -15,6 +15,25 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: all 0.3s ease;
+}
+
+/* ===== Tema Claro ===== */
+body.tema-claro {
+  background: #fff;
+  color: #222;
+}
+body.tema-claro .container {
+  background: rgba(255,255,255,0.9);
+  color: #222;
+}
+body.tema-claro .menu a {
+  background-color: #444;
+  color: #ffdd00;
+}
+body.tema-claro .dia.marcado {
+  background: #ffdd00;
+  color: #222;
 }
 
 /* ===== Container ===== */
@@ -25,6 +44,7 @@ body {
   background: rgba(0,0,0,0.75);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+  transition: all 0.3s ease;
 }
 
 /* ===== Títulos ===== */
@@ -33,6 +53,15 @@ h1, h2, h3 {
   text-align: center;
   text-shadow: 2px 2px 5px black;
   margin-bottom: 20px;
+}
+
+/* ===== Gamificação ===== */
+#gamificacao, #painel-pontos, #medalhas {
+  font-size: 1.3em;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #ffdd00;
+  text-shadow: 2px 2px 5px black;
 }
 
 /* ===== Menu de Treinos ===== */
@@ -79,12 +108,7 @@ h1, h2, h3 {
 }
 
 /* ===== Checkboxes de Treino ===== */
-ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-li {
+ul li {
   background: rgba(255,255,255,0.9);
   color: #222;
   padding: 10px;
@@ -191,6 +215,14 @@ button.cancelar:hover, .btn.cancelar:hover {
   background: #ffdd00;
   color: #000;
   font-weight: bold;
+}
+
+.dia.marcado::after {
+  content: "💥"; /* efeito X-Men */
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-size: 0.8em;
 }
 
 .dia.hoje {
