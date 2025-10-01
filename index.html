@@ -9,9 +9,90 @@
   <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
 
   <!-- Manifest PWA -->
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#ffdd00">
 
-  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ===== Corpo ===== */
+    body {
+      font-family: 'Bangers', sans-serif;
+      background-image: url('xmen-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      margin: 0;
+      padding: 20px;
+      color: #ffdd00;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+    body.tema-claro {
+      background: #fff;
+      color: #222;
+    }
+    body.tema-claro .container {
+      background: rgba(255,255,255,0.9);
+      color: #222;
+    }
+    body.tema-claro .menu a {
+      background-color: #444;
+      color: #ffdd00;
+    }
+
+    /* ===== Container ===== */
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background: rgba(0,0,0,0.75);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+    }
+
+    h1, h2 { text-align: center; color: #ffdd00; text-shadow: 2px 2px 5px black; }
+
+    /* ===== Calendário ===== */
+    #calendario { width: 100%; background: rgba(0,0,0,0.8); border-radius: 15px; padding: 20px; margin-bottom: 25px; }
+    #mes-ano { text-align: center; font-size: 1.6em; margin-bottom: 12px; }
+    #dias-semana, #dias-mes { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+    .dia { background: rgba(255,255,255,0.15); padding: 12px 0; text-align: center; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; user-select: none; }
+    .dia:hover { background: rgba(255,255,255,0.35); color: #ffdd00; transform: scale(1.08);}
+    .dia.marcado { background: #ffdd00; color: #000; font-weight: bold;}
+    .dia.hoje { border: 2px solid #ff4444; }
+    .dia.vazio { background: transparent; cursor: default; }
+
+    #navegacao { text-align: center; margin-top: 15px; }
+    #navegacao button {
+      background: #ff4444; border: none; color: #fff; padding: 10px 18px; margin: 0 10px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;
+    }
+    #navegacao button:hover { background: #cc0000; transform: scale(1.1); }
+
+    /* ===== Menu ===== */
+    .menu { list-style: none; padding: 0; text-align: center; margin: 0; }
+    .menu li { margin: 12px 0; }
+    .menu a {
+      display: inline-block;
+      padding: 15px 28px;
+      background-color: #ff4444;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 1.3em;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    .menu a:hover { background-color: #cc0000; transform: scale(1.08); }
+    .menu a.sabado-domingo { background-color: #4444ff; color: #ffdd00; }
+
+    /* ===== Gamificação ===== */
+    #gamificacao { text-align: center; margin-bottom: 15px; font-size: 1.2em; }
+
+    footer { margin-top: 30px; text-align: center; font-size: 1.1em; text-shadow: 2px 2px 5px black; }
+    #btn-tema { margin-bottom: 20px; padding: 8px 12px; cursor: pointer; border-radius: 8px; border: none; font-weight: bold; }
+  </style>
 </head>
 <body>
 
@@ -49,7 +130,7 @@
   <footer>✨ Treine como um X-Men! ✨</footer>
 
   <script>
-    // ===== Service Worker =====
+    /* ===== Registrar Service Worker ===== */
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
@@ -58,7 +139,7 @@
       });
     }
 
-    // ===== Tema Claro/Escuro =====
+    /* ===== Tema Claro/Escuro ===== */
     const btnTema = document.getElementById('btn-tema');
     btnTema.addEventListener('click', () => {
       document.body.classList.toggle('tema-claro');
@@ -66,20 +147,8 @@
     });
     if(localStorage.getItem('tema') === 'claro') document.body.classList.add('tema-claro');
 
-    // ===== Gamificação =====
+    /* ===== Gamificação e Calendário ===== */
     const gamificacaoEl = document.getElementById('gamificacao');
-    function atualizarGamificacao() {
-      const chave = `diasMarcados-${mesAtual}-${anoAtual}`;
-      const diasMarcados = JSON.parse(localStorage.getItem(chave)) || [];
-      let pontos = diasMarcados.length;
-      let medalha = '';
-      if (pontos >= 20) medalha = '🏆 Mestre X-Men';
-      else if (pontos >= 10) medalha = '🥇 Treinador X-Men';
-      else if (pontos >= 5) medalha = '🥈 Aprendiz X-Men';
-      gamificacaoEl.textContent = `Pontos: ${pontos} | Medalha: ${medalha || 'Nenhuma'}`;
-    }
-
-    // ===== Calendário =====
     const mesAnoEl = document.getElementById('mes-ano');
     const diasMesEl = document.getElementById('dias-mes');
     const btnAnterior = document.getElementById('btn-anterior');
@@ -89,6 +158,17 @@
     let mesAtual = dataAtual.getMonth();
     let anoAtual = dataAtual.getFullYear();
 
+    function atualizarGamificacao() {
+      const chave = `diasMarcados-${anoAtual}-${mesAtual}`;
+      const diasMarcados = JSON.parse(localStorage.getItem(chave)) || [];
+      const pontos = diasMarcados.length;
+      let medalha = '';
+      if (pontos >= 20) medalha = '🏆 Mestre X-Men';
+      else if (pontos >= 10) medalha = '🥇 Treinador X-Men';
+      else if (pontos >= 5) medalha = '🥈 Aprendiz X-Men';
+      gamificacaoEl.textContent = `Pontos: ${pontos} | Medalha: ${medalha || 'Nenhuma'}`;
+    }
+
     function carregarCalendario(mes, ano) {
       mesAnoEl.textContent = `${obterNomeMes(mes)} ${ano}`;
       diasMesEl.innerHTML = '';
@@ -96,15 +176,13 @@
       const primeiraData = new Date(ano, mes, 1);
       const ultimoDia = new Date(ano, mes + 1, 0).getDate();
       const diaSemanaInicio = primeiraData.getDay();
-
-      // Dias vazios
       for(let i=0;i<diaSemanaInicio;i++){
         const diaVazio = document.createElement('div');
         diaVazio.classList.add('dia','vazio');
         diasMesEl.appendChild(diaVazio);
       }
 
-      const chaveStorage = `diasMarcados-${mes}-${ano}`;
+      const chaveStorage = `diasMarcados-${ano}-${mes}`;
       const dadosMarcados = JSON.parse(localStorage.getItem(chaveStorage)) || [];
 
       for(let dia=1; dia<=ultimoDia; dia++){
@@ -153,7 +231,6 @@
       if(mesAtual<0){ mesAtual=11; anoAtual--; }
       carregarCalendario(mesAtual,anoAtual);
     });
-
     btnProximo.addEventListener('click',()=>{
       mesAtual++;
       if(mesAtual>11){ mesAtual=0; anoAtual++; }
@@ -162,7 +239,7 @@
 
     carregarCalendario(mesAtual,anoAtual);
 
-    // ===== Notificações =====
+    /* ===== Notificações ===== */
     function notificar(texto){
       if(Notification.permission==='granted'){
         new Notification(texto);
@@ -173,8 +250,6 @@
       }
     }
     setTimeout(()=>notificar("💪 Hora do treino X-Men!"),5000);
-
   </script>
-
 </body>
 </html>
