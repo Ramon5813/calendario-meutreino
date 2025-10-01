@@ -1,37 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <link rel="manifest" href="manifest.json">
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(reg => console.log('Service Worker registrado!', reg))
-        .catch(err => console.log('Erro ao registrar SW:', err));
-    });
-  }
-</script>
-  function atualizarGamificacao() {
-  const diasMarcados = JSON.parse(localStorage.getItem('diasMarcados-' + mesAtual + '-' + anoAtual)) || [];
-  let pontos = diasMarcados.length;
-
-  // Medalhas simples
-  let medalha = '';
-  if (pontos >= 20) medalha = '🏆 Mestre X-Men';
-  else if (pontos >= 10) medalha = '🥇 Treinador X-Men';
-  else if (pontos >= 5) medalha = '🥈 Aprendiz X-Men';
-  
-  const gamificacaoEl = document.getElementById('gamificacao');
-  gamificacaoEl.textContent = `Pontos: ${pontos} | Medalha: ${medalha}`;
-}
-
-// Chame essa função sempre que marcar/desmarcar dias
-
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Treinos X-Men - Gamificação</title>
-  
+
   <!-- Fonte HQ -->
   <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
 
@@ -39,7 +12,6 @@
   <link rel="manifest" href="manifest.json">
 
   <style>
-    /* ===== Corpo da página ===== */
     body {
       font-family: 'Bangers', sans-serif;
       background-image: url('xmen-bg.jpg');
@@ -54,8 +26,6 @@
       align-items: center;
       transition: all 0.3s ease;
     }
-
-    /* ===== Tema Claro ===== */
     body.tema-claro {
       background: #fff;
       color: #222;
@@ -69,7 +39,6 @@
       color: #ffdd00;
     }
 
-    /* ===== Container ===== */
     .container {
       max-width: 600px;
       width: 100%;
@@ -86,61 +55,19 @@
       text-shadow: 2px 2px 5px black;
     }
 
-    /* ===== Gamificação ===== */
-    #painel-pontos {
-      text-align: center;
-      font-size: 1.3em;
-      margin-bottom: 15px;
-    }
-    #medalhas {
-      text-align: center;
-      margin-bottom: 15px;
-    }
-
-    /* ===== Calendário ===== */
-    #calendario {
-      width: 100%;
-      background: rgba(0,0,0,0.8);
-      border-radius: 15px;
-      padding: 20px;
-      margin-bottom: 25px;
-    }
-    #mes-ano {
-      text-align: center;
-      font-size: 1.6em;
-      margin-bottom: 12px;
-    }
-    #dias-semana, #dias-mes {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 5px;
-    }
-    .dia {
-      background: rgba(255,255,255,0.15);
-      padding: 12px 0;
-      text-align: center;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
-      user-select: none;
-    }
+    /* Calendário */
+    #calendario { width: 100%; background: rgba(0,0,0,0.8); border-radius: 15px; padding: 20px; margin-bottom: 25px; }
+    #mes-ano { text-align: center; font-size: 1.6em; margin-bottom: 12px; }
+    #dias-semana, #dias-mes { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+    .dia { background: rgba(255,255,255,0.15); padding: 12px 0; text-align: center; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; user-select: none; }
     .dia:hover { background: rgba(255,255,255,0.35); color: #ffdd00; transform: scale(1.08);}
     .dia.marcado { background: #ffdd00; color: #000; font-weight: bold;}
     .dia.hoje { border: 2px solid #ff4444; }
     .dia.vazio { background: transparent; cursor: default; }
 
-    /* Navegação calendário */
     #navegacao { text-align: center; margin-top: 15px; }
     #navegacao button {
-      background: #ff4444;
-      border: none;
-      color: #fff;
-      padding: 10px 18px;
-      margin: 0 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
+      background: #ff4444; border: none; color: #fff; padding: 10px 18px; margin: 0 10px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;
     }
     #navegacao button:hover { background: #cc0000; transform: scale(1.1); }
 
@@ -161,23 +88,20 @@
     .menu a:hover { background-color: #cc0000; transform: scale(1.08); }
     .menu a.sabado-domingo { background-color: #4444ff; color: #ffdd00; }
 
+    /* Gamificação */
+    #gamificacao, #painel-pontos, #medalhas { text-align: center; margin-bottom: 15px; font-size: 1.2em; }
+
     footer { margin-top: 30px; text-align: center; font-size: 1.1em; text-shadow: 2px 2px 5px black; }
 
-    /* Botão alternar tema */
     #btn-tema { margin-bottom: 20px; padding: 8px 12px; cursor: pointer; border-radius: 8px; border: none; font-weight: bold; }
   </style>
 </head>
-  <div id="gamificacao" style="text-align:center; margin-bottom:15px; font-size:1.2em; color:#ffdd00; text-shadow:2px2px5px black;"></div>
-
-
 <body>
 
   <h1>Calendário X-Men + Treinos</h1>
-
   <button id="btn-tema">🌗 Alternar Tema</button>
 
-  <div class="container" id="painel-pontos">🏅 Pontos: 0</div>
-  <div class="container" id="medalhas">Medalhas: Nenhuma</div>
+  <div id="gamificacao" class="container">Pontos: 0 | Medalha: Nenhuma</div>
 
   <div class="container" id="calendario">
     <div id="mes-ano"></div>
@@ -208,6 +132,15 @@
   <footer>✨ Treine como um X-Men! ✨</footer>
 
   <script>
+    /* ===== Service Worker ===== */
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('Service Worker registrado!', reg))
+          .catch(err => console.log('Erro ao registrar SW:', err));
+      });
+    }
+
     /* ===== Tema Claro/Escuro ===== */
     const btnTema = document.getElementById('btn-tema');
     btnTema.addEventListener('click', () => {
@@ -217,30 +150,17 @@
     if(localStorage.getItem('tema') === 'claro') document.body.classList.add('tema-claro');
 
     /* ===== Gamificação ===== */
-    const painelPontos = document.getElementById('painel-pontos');
-    const medalhasEl = document.getElementById('medalhas');
-
-    function atualizarPontos() {
-      let pontos = parseInt(localStorage.getItem('pontos')) || 0;
-      let medalhas = JSON.parse(localStorage.getItem('medalhas')) || [];
-      painelPontos.textContent = `🏅 Pontos: ${pontos}`;
-      medalhasEl.textContent = `Medalhas: ${medalhas.length ? medalhas.join(' 🏆 ') : 'Nenhuma'}`;
+    const gamificacaoEl = document.getElementById('gamificacao');
+    function atualizarGamificacao() {
+      const chave = `diasMarcados-${mesAtual}-${anoAtual}`;
+      const diasMarcados = JSON.parse(localStorage.getItem(chave)) || [];
+      let pontos = diasMarcados.length;
+      let medalha = '';
+      if (pontos >= 20) medalha = '🏆 Mestre X-Men';
+      else if (pontos >= 10) medalha = '🥇 Treinador X-Men';
+      else if (pontos >= 5) medalha = '🥈 Aprendiz X-Men';
+      gamificacaoEl.textContent = `Pontos: ${pontos} | Medalha: ${medalha}`;
     }
-
-    function adicionarPonto(dia) {
-      let pontos = parseInt(localStorage.getItem('pontos')) || 0;
-      pontos += 10;
-      localStorage.setItem('pontos', pontos);
-
-      // Checagem de conquistas
-      let medalhas = JSON.parse(localStorage.getItem('medalhas')) || [];
-      if(pontos >= 50 && !medalhas.includes('Treinou 5 dias seguidos')) medalhas.push('Treinou 5 dias seguidos');
-      if(pontos >= 200 && !medalhas.includes('Completou 20 dias no mês')) medalhas.push('Completou 20 dias no mês');
-      localStorage.setItem('medalhas', JSON.stringify(medalhas));
-      atualizarPontos();
-    }
-
-    atualizarPontos();
 
     /* ===== Calendário ===== */
     const mesAnoEl = document.getElementById('mes-ano');
@@ -285,12 +205,14 @@
           } else {
             diaEl.classList.add('marcado');
             adicionarDia(dia,chaveStorage);
-            adicionarPonto(dia); // adiciona pontos ao marcar
           }
+          atualizarGamificacao();
         });
 
         diasMesEl.appendChild(diaEl);
       }
+
+      atualizarGamificacao();
     }
 
     function adicionarDia(dia,chave){
@@ -298,6 +220,7 @@
       if(!arr.includes(dia)) arr.push(dia);
       localStorage.setItem(chave,JSON.stringify(arr));
     }
+
     function removerDia(dia,chave){
       let arr = JSON.parse(localStorage.getItem(chave)) || [];
       arr = arr.filter(d=>d!==dia);
@@ -313,6 +236,7 @@
       if(mesAtual<0){ mesAtual=11; anoAtual--; }
       carregarCalendario(mesAtual,anoAtual);
     });
+
     btnProximo.addEventListener('click',()=>{
       mesAtual++;
       if(mesAtual>11){ mesAtual=0; anoAtual++; }
@@ -331,11 +255,9 @@
         });
       }
     }
-
-    // Exemplo de lembrete diário (teste 5s após carregar)
+    // Lembrete de treino (exemplo)
     setTimeout(()=>notificar("💪 Hora do treino X-Men!"),5000);
+
   </script>
 </body>
 </html>
-
-
