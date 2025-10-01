@@ -1,6 +1,9 @@
+/* ===== Fonte estilo HQ ===== */
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+
 /* ===== Corpo da página ===== */
 body {
-  font-family: 'Comic Sans MS', cursive, sans-serif; /* estilo HQ */
+  font-family: 'Bangers', sans-serif; /* estilo HQ */
   background-image: url('xmen-bg.jpg'); /* coloque sua imagem dos X-Men na mesma pasta */
   background-size: cover;
   background-position: center;
@@ -31,63 +34,22 @@ h1, h2, h3 {
   text-shadow: 2px 2px 5px black;
 }
 
-/* ===== Menu de treinos ===== */
-.menu {
-  list-style: none;
-  padding: 0;
+/* ===== Calendário ===== */
+#calendario {
+  max-width: 360px;
+  width: 100%;
+  background: rgba(0,0,0,0.8);
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.8);
+  padding: 20px;
+  margin-bottom: 40px;
+  user-select: none;
 }
 
-.menu li {
-  margin: 10px 0;
+#mes-ano {
   text-align: center;
-}
-
-.menu a {
-  background-color: #ff4444; /* vermelho estilo HQ */
-  color: #fff;
-  padding: 12px 20px;
-  display: inline-block;
-  width: 80%;
-  text-decoration: none;
-  border-radius: 10px;
-  font-weight: bold;
-  transition: transform 0.2s ease, background-color 0.3s ease;
-}
-
-.menu a:hover {
-  background-color: #cc0000;
-  transform: scale(1.05);
-}
-
-/* Link especial de sábado/domingo */
-.menu a.sabado-domingo {
-  background-color: #4444ff;
+  font-size: 1.6em;
+  margin-bottom: 12px;
   color: #ffdd00;
-}
-
-/* ===== Labels e checkboxes ===== */
-label {
-  display: block;
-  margin: 8px 0;
-  color: #ffdd00;
-}
-
-input[type="checkbox"] {
-  margin-right: 8px;
-  accent-color: #ffdd00; /* checkbox amarelo estilo HQ */
-}
-
-/* ===== Link voltar ===== */
-.voltar {
-  display: block;
-  margin-top: 20px;
-  text-align: center;
-  text-decoration: none;
-  color: #ffdd00;
-  font-weight: bold;
-  text-shadow: 1px 1px 3px black;
-}
-
-.voltar:hover {
-  text-decoration: underline;
+  text-shadow: 2px 2px 4px #000;
 }
