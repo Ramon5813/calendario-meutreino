@@ -1,49 +1,105 @@
-{
-  "name": "X-Men Treinos",
-  "short_name": "X-Treinos",
-  "description": "Acompanhe seus treinos, dietas e conquiste medalhas estilo X-Men!",
-  "start_url": "/index.html",
-  "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#ffdd00",
-  "orientation": "portrait-primary",
-  "scope": "/",
-  "icons": [
-    {
-      "src": "/icons/xmen-72.png",
-      "sizes": "72x72",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/xmen-96.png",
-      "sizes": "96x96",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/xmen-128.png",
-      "sizes": "128x128",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/xmen-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/xmen-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/xmen-maskable-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
-  ]
-}
+const CACHE_NAME = "xmen-treinos-v2.0"; // ⬅️ Atualize versão ao alterar arquivos
+const OFFLINE_URL = "offline.html";
+
+const ASSETS_TO_CACHE = [
+  "index.html",
+  "offline.html",
+  "manifest.json",
+  "xmen-bg.jpg",
+  "icons/xmen-72.png",
+  "icons/xmen-96.png",
+  "icons/xmen-128.png",
+  "icons/xmen-192.png",
+  "icons/xmen-512.png",
+  "icons/xmen-maskable-512.png",
+  "segunda.html",
+  "terca.html",
+  "quarta.html",
+  "quinta.html",
+  "sexta.html",
+  "sabado.html",
+  "observacoes.html",
+  "dietas.html",
+  "treino-segunda.jpg",
+  "treino-terca.jpg",
+  "treino-quarta.jpg",
+  "treino-quinta.jpg",
+  "treino-sexta.jpg",
+  "treino-sabado.jpg"
+];
+
+// =====================================================
+// 🧱 INSTALAÇÃO - Armazena os arquivos no cache
+// =====================================================
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) => {
+        console.log("📦 Cache inicializado:", CACHE_NAME);
+        return cache.addAll(ASSETS_TO_CACHE);
+      })
+      .catch((err) => console.error("Erro ao adicionar cache:", err))
+  );
+  self.skipWaiting();
+});
+
+// =====================================================
+// 🔁 ATIVAÇÃO - Limpa caches antigos
+// =====================================================
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            console.log("🧹 Removendo cache antigo:", key);
+            return caches.delete(key);
+          }
+        })
+      );
+    })
+  );
+  self.clients.claim();
+});
+
+// =====================================================
+// 🌐 FETCH - Intercepta requisições e serve do cache
+// =====================================================
+self.addEventListener("fetch", (event) => {
+  if (event.request.method !== "GET") return;
+
+  event.respondWith(
+    fetch(event.request)
+      .then((response) => {
+        const clonedResponse = response.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          try {
+            cache.put(event.request, clonedResponse);
+          } catch (err) {
+            console.warn("Falha ao armazenar no cache:", err);
+          }
+        });
+        return response;
+      })
+      .catch(() => caches.match(event.request).then(
+        (cachedResponse) => cachedResponse || caches.match(OFFLINE_URL)
+      ))
+  );
+});
+
+// =====================================================
+// 🆕 ATUALIZAÇÃO - Detecta nova versão e avisa o cliente
+// =====================================================
+self.addEventListener("install", () => {
+  console.log("🔄 Nova versão do Service Worker detectada!");
+});
+
+self.addEventListener("controllerchange", () => {
+  console.log("⚡ Controlador atualizado!");
+});
+
+self.addEventListener("message", (event) => {
+  if (event.data === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
+});
