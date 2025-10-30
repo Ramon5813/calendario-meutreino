@@ -1,39 +1,52 @@
+/* ============================================================
+   🌟 X-MEN TREINOS - Estilo Principal
+   Autor: Ramon Ferreira Barbosa
+   Versão: 2.0
+   ============================================================ */
+
 /* ===== Fonte estilo HQ ===== */
 @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+
+/* ===== Variáveis globais ===== */
+:root {
+  --cor-primaria: #ffdd00;
+  --cor-secundaria: #ff4444;
+  --cor-secundaria-hover: #cc0000;
+  --cor-fundo: rgba(0,0,0,0.75);
+  --cor-texto-escuro: #222;
+  --sombra-padrao: 0 4px 12px rgba(0,0,0,0.8);
+}
 
 /* ===== Corpo da página ===== */
 body {
   font-family: 'Bangers', sans-serif;
-  background-image: url('xmen-bg.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  margin: 0;
-  padding: 20px;
-  color: #ffdd00;
+  background: url('xmen-bg.jpg') center/cover fixed no-repeat;
+  color: var(--cor-primaria);
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: all 0.3s ease;
+  margin: 0;
+  padding: 20px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
 /* ===== Tema Claro ===== */
 body.tema-claro {
   background: #fff;
-  color: #222;
+  color: var(--cor-texto-escuro);
 }
 body.tema-claro .container {
   background: rgba(255,255,255,0.9);
-  color: #222;
+  color: var(--cor-texto-escuro);
 }
 body.tema-claro .menu a {
   background-color: #444;
-  color: #ffdd00;
+  color: var(--cor-primaria);
 }
 body.tema-claro .dia.marcado {
-  background: #ffdd00;
-  color: #222;
+  background: var(--cor-primaria);
+  color: var(--cor-texto-escuro);
 }
 
 /* ===== Container ===== */
@@ -41,15 +54,15 @@ body.tema-claro .dia.marcado {
   max-width: 600px;
   margin: 30px auto;
   padding: 20px;
-  background: rgba(0,0,0,0.75);
+  background: var(--cor-fundo);
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+  box-shadow: var(--sombra-padrao);
   transition: all 0.3s ease;
 }
 
 /* ===== Títulos ===== */
 h1, h2, h3 {
-  color: #ffdd00;
+  color: var(--cor-primaria);
   text-align: center;
   text-shadow: 2px 2px 5px black;
   margin-bottom: 20px;
@@ -60,7 +73,7 @@ h1, h2, h3 {
   font-size: 1.3em;
   margin-bottom: 20px;
   text-align: center;
-  color: #ffdd00;
+  color: var(--cor-primaria);
   text-shadow: 2px 2px 5px black;
 }
 
@@ -70,10 +83,7 @@ h1, h2, h3 {
   text-align: center;
   margin-bottom: 30px;
 }
-
-.menu-container h2 {
-  margin-bottom: 20px;
-}
+.menu-container h2 { margin-bottom: 20px; }
 
 .menu {
   list-style: none;
@@ -81,14 +91,12 @@ h1, h2, h3 {
   margin: 0;
 }
 
-.menu li {
-  margin: 12px 0;
-}
+.menu li { margin: 12px 0; }
 
 .menu a {
   display: inline-block;
   padding: 15px 28px;
-  background-color: #ff4444;
+  background-color: var(--cor-secundaria);
   color: #fff;
   text-decoration: none;
   border-radius: 12px;
@@ -96,35 +104,36 @@ h1, h2, h3 {
   font-weight: bold;
   transition: all 0.3s ease;
 }
-
 .menu a:hover {
-  background-color: #cc0000;
+  background-color: var(--cor-secundaria-hover);
   transform: scale(1.05);
 }
-
 .menu a.sabado-domingo {
   background-color: #4444ff;
-  color: #ffdd00;
+  color: var(--cor-primaria);
 }
 
 /* ===== Checkboxes de Treino ===== */
 ul li {
   background: rgba(255,255,255,0.9);
-  color: #222;
+  color: var(--cor-texto-escuro);
   padding: 10px;
   border-radius: 8px;
   margin-bottom: 10px;
   display: flex;
   align-items: center;
   box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  transition: all 0.3s ease;
 }
-
+ul li:hover {
+  background: rgba(255,255,255,1);
+  transform: scale(1.03);
+}
 input[type="checkbox"] {
   margin-right: 10px;
   transform: scale(1.2);
   cursor: pointer;
 }
-
 label {
   font-size: 1.1em;
   cursor: pointer;
@@ -132,7 +141,7 @@ label {
 
 /* ===== Botões ===== */
 button, .btn {
-  background: #ff4444;
+  background: var(--cor-secundaria);
   color: white;
   border: none;
   padding: 8px 14px;
@@ -142,52 +151,50 @@ button, .btn {
   transition: transform 0.2s ease, background-color 0.3s ease;
   margin-left: 5px;
 }
-
 button:hover, .btn:hover {
-  background: #cc0000;
+  background: var(--cor-secundaria-hover);
   transform: scale(1.05);
 }
-
 button.cancelar, .btn.cancelar {
   background-color: #757575;
 }
-
 button.cancelar:hover, .btn.cancelar:hover {
   background-color: #424242;
+}
+button:focus, a:focus {
+  outline: 2px solid var(--cor-primaria);
+  outline-offset: 3px;
 }
 
 /* ===== Calendário ===== */
 #calendario {
   max-width: 360px;
   width: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0,0,0,0.8);
   border-radius: 15px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.8);
+  box-shadow: var(--sombra-padrao);
   padding: 20px;
   margin-bottom: 40px;
   user-select: none;
+  backdrop-filter: blur(3px);
 }
-
 #mes-ano {
   text-align: center;
   font-size: 1.6em;
   margin-bottom: 12px;
-  color: #ffdd00;
+  color: var(--cor-primaria);
   text-shadow: 2px 2px 4px #000;
 }
-
 #dias-semana {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   font-weight: bold;
-  color: #ff4444;
+  color: var(--cor-secundaria);
   margin-bottom: 5px;
 }
-
 #dias-semana div {
   text-align: center;
 }
-
 #dias-mes {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -204,44 +211,45 @@ button.cancelar:hover, .btn.cancelar:hover {
   position: relative;
   user-select: none;
 }
-
 .dia:hover {
   background: rgba(255,255,255,0.35);
-  color: #ffdd00;
+  color: var(--cor-primaria);
   transform: scale(1.08);
 }
-
 .dia.marcado {
-  background: #ffdd00;
+  background: var(--cor-primaria);
   color: #000;
   font-weight: bold;
+  animation: brilhoXmen 2s infinite;
 }
-
 .dia.marcado::after {
-  content: "💥"; /* efeito X-Men */
+  content: "💥";
   position: absolute;
   top: 2px;
   right: 2px;
   font-size: 0.8em;
 }
-
 .dia.hoje {
-  border: 2px solid #ff4444;
+  border: 2px solid var(--cor-secundaria);
 }
-
 .dia.vazio {
   background: transparent;
   cursor: default;
 }
 
-/* Botões de navegação do calendário */
+/* ===== Animação X-Men ===== */
+@keyframes brilhoXmen {
+  0%, 100% { box-shadow: 0 0 10px var(--cor-primaria); }
+  50% { box-shadow: 0 0 20px var(--cor-primaria); }
+}
+
+/* ===== Navegação Calendário ===== */
 #navegacao {
   text-align: center;
   margin-top: 15px;
 }
-
 #navegacao button {
-  background: #ff4444;
+  background: var(--cor-secundaria);
   border: none;
   color: #fff;
   padding: 10px 18px;
@@ -251,9 +259,8 @@ button.cancelar:hover, .btn.cancelar:hover {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
 #navegacao button:hover {
-  background: #cc0000;
+  background: var(--cor-secundaria-hover);
   transform: scale(1.1);
 }
 
@@ -262,7 +269,7 @@ footer {
   margin-top: 50px;
   text-align: center;
   font-size: 1.1em;
-  color: #ffdd00;
+  color: var(--cor-primaria);
   text-shadow: 2px 2px 5px #000;
 }
 
@@ -271,16 +278,28 @@ footer {
   display: inline-block;
   margin-top: 20px;
   text-decoration: none;
-  color: #ffdd00;
+  color: var(--cor-primaria);
   font-weight: bold;
   text-shadow: 1px 1px 3px black;
+  transition: all 0.2s ease;
 }
-
 .voltar:hover {
   text-decoration: underline;
+  transform: scale(1.05);
 }
 
 /* ===== Responsividade ===== */
+@media(max-width: 768px) {
+  .container {
+    margin: 15px;
+    padding: 15px;
+  }
+  .menu a {
+    display: block;
+    width: 100%;
+    padding: 14px;
+  }
+}
 @media(max-width: 400px) {
   .menu a, #navegacao button {
     padding: 12px 18px;
