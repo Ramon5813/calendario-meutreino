@@ -49,6 +49,13 @@
       font-size: 1.1em;
     }
 
+    .imagem-treino {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    }
+
     ul {
       list-style: none;
       padding-left: 0;
@@ -143,7 +150,10 @@
 </head>
 <body>
   <div class="container">
-    <h1>🌊 Sábado / Domingo – Agenda de Treino</h1>
+    <h1 id="titulo-pagina">🌊 Sábado / Domingo – Agenda de Treino</h1>
+
+    <img src="treino-fimdesemana.jpg" alt="Treinos de Sábado e Domingo" class="imagem-treino">
+
     <p>Adicione e edite os exercícios ou atividades realizadas. Seus dados ficam salvos no navegador.</p>
 
     <ul id="exercicios-lista"></ul>
@@ -156,13 +166,22 @@
   <script>
     const lista = document.getElementById('exercicios-lista');
     const botaoAdicionar = document.getElementById('adicionar-btn');
+    const tituloPagina = document.getElementById('titulo-pagina');
 
+    // ===== Título dinâmico =====
+    const hoje = new Date().getDay();
+    if (hoje === 6) tituloPagina.textContent = "🌊 Sábado – Treino Livre";
+    else if (hoje === 0) tituloPagina.textContent = "🌞 Domingo – Treino Livre";
+    else tituloPagina.textContent = "🌊 Sábado / Domingo – Agenda de Treino";
+
+    // ===== Funções =====
     function salvarLista() {
       const itens = [];
       document.querySelectorAll('#exercicios-lista li input[type="text"]').forEach(input => {
         itens.push(input.value.trim());
       });
       localStorage.setItem('sabadoDomingoTreino', JSON.stringify(itens));
+      verificarListaVazia();
     }
 
     function criarItem(texto = '') {
@@ -184,8 +203,8 @@
 
       li.appendChild(input);
       li.appendChild(btnExcluir);
-
       lista.appendChild(li);
+      verificarListaVazia();
     }
 
     function carregarLista() {
@@ -196,8 +215,28 @@
           if (texto) criarItem(texto);
         });
       }
+      verificarListaVazia();
     }
 
+    // ===== Mensagem automática de descanso =====
+    function verificarListaVazia() {
+      let msgExistente = document.getElementById('mensagem-vazia');
+      if (lista.children.length === 0) {
+        if (!msgExistente) {
+          msgExistente = document.createElement('p');
+          msgExistente.textContent = 'Nenhum treino hoje. Heróis também descansam. 💤';
+          msgExistente.style.textAlign = 'center';
+          msgExistente.style.color = '#a7ffeb';
+          msgExistente.style.textShadow = '2px 2px 4px black';
+          msgExistente.id = 'mensagem-vazia';
+          lista.parentNode.insertBefore(msgExistente, lista.nextSibling);
+        }
+      } else {
+        if (msgExistente) msgExistente.remove();
+      }
+    }
+
+    // ===== Inicialização =====
     botaoAdicionar.addEventListener('click', () => {
       criarItem('');
       salvarLista();
