@@ -41,6 +41,13 @@
       font-size: 2em;
     }
 
+    .imagem-dietas {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    }
+
     form {
       margin-bottom: 30px;
     }
@@ -95,7 +102,7 @@
 
     .lista-dietas li {
       background: rgba(255,255,255,0.15);
-      color: #222;
+      color: #fff;
       margin-bottom: 12px;
       padding: 12px 15px;
       border-radius: 10px;
@@ -132,6 +139,14 @@
       transform: scale(1.05);
     }
 
+    .mensagem-vazia {
+      text-align: center;
+      color: #ffdd00;
+      font-size: 1.1em;
+      text-shadow: 2px 2px 4px black;
+      margin-top: 10px;
+    }
+
     @media(max-width: 400px) {
       h2 { font-size: 1.5em; }
       .lista-dietas li { font-size: 1em; padding: 10px; }
@@ -142,6 +157,7 @@
 <body>
   <div class="container">
     <h2>🍽️ Dietas & Receitas</h2>
+    <img src="dietas.jpg" alt="Dietas e Receitas X-Men" class="imagem-dietas">
 
     <form id="form-dieta">
       <label for="novaDieta">Adicione uma nova dieta ou receita:</label>
@@ -163,6 +179,14 @@
     function carregarDietas() {
       const dietas = JSON.parse(localStorage.getItem('dietas')) || [];
       listaDietas.innerHTML = '';
+
+      if (dietas.length === 0) {
+        const msg = document.createElement('p');
+        msg.textContent = 'Nenhuma dieta cadastrada ainda. 🥦';
+        msg.className = 'mensagem-vazia';
+        listaDietas.appendChild(msg);
+        return;
+      }
 
       dietas.forEach((dieta, index) => {
         const li = document.createElement('li');
@@ -211,6 +235,7 @@
         if (novoTexto) {
           dietas[index] = novoTexto;
           localStorage.setItem('dietas', JSON.stringify(dietas));
+          mostrarAviso('✅ Dieta atualizada com sucesso!');
           carregarDietas();
         } else {
           alert('O texto da dieta não pode ficar vazio.');
@@ -238,8 +263,20 @@
         const dietas = JSON.parse(localStorage.getItem('dietas')) || [];
         dietas.splice(index, 1);
         localStorage.setItem('dietas', JSON.stringify(dietas));
+        mostrarAviso('🗑️ Dieta removida.');
         carregarDietas();
       }
+    }
+
+    function mostrarAviso(texto) {
+      const aviso = document.createElement('p');
+      aviso.textContent = texto;
+      aviso.style.color = '#ffdd00';
+      aviso.style.textAlign = 'center';
+      aviso.style.textShadow = '2px 2px 4px black';
+      aviso.style.marginTop = '10px';
+      form.parentNode.insertBefore(aviso, form.nextSibling);
+      setTimeout(() => aviso.remove(), 2000);
     }
 
     form.addEventListener('submit', e => {
@@ -247,9 +284,10 @@
       const texto = textarea.value.trim();
       if (texto) {
         const dietas = JSON.parse(localStorage.getItem('dietas')) || [];
-        dietas.push(texto);
+        dietas.unshift(texto); // adiciona no topo
         localStorage.setItem('dietas', JSON.stringify(dietas));
         textarea.value = '';
+        mostrarAviso('💾 Dieta salva com sucesso!');
         carregarDietas();
       }
     });
