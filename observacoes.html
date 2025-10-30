@@ -41,23 +41,51 @@
       font-size: 2em;
     }
 
-    ul {
-      list-style-type: disc;
-      padding-left: 25px;
+    .imagem-observacoes {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     }
 
-    ul li {
-      margin-bottom: 12px;
+    textarea {
+      width: 100%;
+      height: 220px;
       background: rgba(255,255,255,0.15);
-      color: #222;
-      padding: 12px 15px;
-      border-radius: 10px;
+      border: 2px solid #ffdd00;
+      border-radius: 12px;
+      color: #fff;
+      font-family: 'Bangers', sans-serif;
+      font-size: 1.2em;
+      padding: 12px;
+      resize: none;
+      outline: none;
       box-shadow: 0 3px 8px rgba(0,0,0,0.6);
-      transition: transform 0.2s ease, background 0.2s ease;
+      transition: background 0.3s ease, transform 0.2s ease;
     }
 
-    ul li:hover {
-      background: rgba(255,255,255,0.3);
+    textarea:focus {
+      background: rgba(255,255,255,0.25);
+      transform: scale(1.02);
+    }
+
+    #salvar {
+      display: block;
+      width: 100%;
+      padding: 12px 20px;
+      font-size: 1.2em;
+      border-radius: 12px;
+      border: none;
+      background: #ffdd00;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+      margin-top: 15px;
+    }
+
+    #salvar:hover {
+      background: #ffd633;
       transform: scale(1.03);
     }
 
@@ -77,23 +105,56 @@
       transform: scale(1.05);
     }
 
+    .info {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 1em;
+      color: #ccc;
+      text-shadow: 1px 1px 3px black;
+    }
+
     @media(max-width: 400px) {
       h2 { font-size: 1.5em; }
-      ul li { font-size: 1em; padding: 10px; }
+      textarea { font-size: 1em; height: 180px; }
+      #salvar { font-size: 1em; padding: 10px; }
       .voltar { font-size: 1em; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>🔥 Estratégias de Definição</h2>
-    <ul>
-      <li>Esteira pode ser feita todos os dias (mesmo que 10-15 min pós-treino).</li>
-      <li>Abdômen 5x na semana ajuda muito no visual e core.</li>
-      <li>Descanso ativo no fim de semana (caminhada, alongamento, mobilidade).</li>
-      <li>Alimentação leve + foco em proteína e corte de excessos = resultado rápido.</li>
-    </ul>
+    <h2>🧠 Observações e Estratégias</h2>
+    <img src="observacoes.jpg" alt="Anotações e Estratégias" class="imagem-observacoes">
+
+    <textarea id="textoObservacoes" placeholder="Escreva suas anotações aqui..."></textarea>
+    <button id="salvar">💾 Salvar Anotações</button>
+
+    <p class="info">As anotações ficam salvas no navegador, mesmo após fechar o site.</p>
+
     <a href="index.html" class="voltar">⬅ Voltar</a>
   </div>
+
+  <script>
+    const campoTexto = document.getElementById('textoObservacoes');
+    const botaoSalvar = document.getElementById('salvar');
+
+    // Carregar observações salvas
+    window.addEventListener('load', () => {
+      const observacoesSalvas = localStorage.getItem('observacoesTreino');
+      if (observacoesSalvas) campoTexto.value = observacoesSalvas;
+    });
+
+    // Salvar manualmente
+    botaoSalvar.addEventListener('click', () => {
+      localStorage.setItem('observacoesTreino', campoTexto.value);
+      botaoSalvar.textContent = '✅ Salvo!';
+      setTimeout(() => botaoSalvar.textContent = '💾 Salvar Anotações', 2000);
+    });
+
+    // Salvamento automático a cada digitação
+    campoTexto.addEventListener('input', () => {
+      localStorage.setItem('observacoesTreino', campoTexto.value);
+    });
+  </script>
 </body>
 </html>
