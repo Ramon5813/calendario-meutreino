@@ -28,14 +28,17 @@
       align-items: center;
       transition: all 0.3s ease;
     }
+
     body.tema-claro {
       background: #fff;
       color: #222;
     }
+
     body.tema-claro .container {
       background: rgba(255,255,255,0.9);
       color: #222;
     }
+
     body.tema-claro .menu a {
       background-color: #444;
       color: #ffdd00;
@@ -52,27 +55,97 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.8);
     }
 
-    h1, h2 { text-align: center; color: #ffdd00; text-shadow: 2px 2px 5px black; }
+    h1, h2 {
+      text-align: center;
+      color: #ffdd00;
+      text-shadow: 2px 2px 5px black;
+    }
 
     /* ===== Calendário ===== */
-    #calendario { width: 100%; background: rgba(0,0,0,0.8); border-radius: 15px; padding: 20px; margin-bottom: 25px; }
-    #mes-ano { text-align: center; font-size: 1.6em; margin-bottom: 12px; }
-    #dias-semana, #dias-mes { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
-    .dia { background: rgba(255,255,255,0.15); padding: 12px 0; text-align: center; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; user-select: none; }
-    .dia:hover { background: rgba(255,255,255,0.35); color: #ffdd00; transform: scale(1.08);}
-    .dia.marcado { background: #ffdd00; color: #000; font-weight: bold;}
-    .dia.hoje { border: 2px solid #ff4444; }
-    .dia.vazio { background: transparent; cursor: default; }
-
-    #navegacao { text-align: center; margin-top: 15px; }
-    #navegacao button {
-      background: #ff4444; border: none; color: #fff; padding: 10px 18px; margin: 0 10px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;
+    #calendario {
+      width: 100%;
+      background: rgba(0,0,0,0.8);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 25px;
     }
-    #navegacao button:hover { background: #cc0000; transform: scale(1.1); }
+
+    #mes-ano {
+      text-align: center;
+      font-size: 1.6em;
+      margin-bottom: 12px;
+    }
+
+    #dias-semana, #dias-mes {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+    }
+
+    .dia {
+      background: rgba(255,255,255,0.15);
+      padding: 12px 0;
+      text-align: center;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .dia:hover {
+      background: rgba(255,255,255,0.35);
+      color: #ffdd00;
+      transform: scale(1.08);
+    }
+
+    .dia.marcado {
+      background: #ffdd00;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .dia.hoje {
+      border: 2px solid #ff4444;
+    }
+
+    .dia.vazio {
+      background: transparent;
+      cursor: default;
+    }
+
+    #navegacao {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    #navegacao button {
+      background: #ff4444;
+      border: none;
+      color: #fff;
+      padding: 10px 18px;
+      margin: 0 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #navegacao button:hover {
+      background: #cc0000;
+      transform: scale(1.1);
+    }
 
     /* ===== Menu ===== */
-    .menu { list-style: none; padding: 0; text-align: center; margin: 0; }
-    .menu li { margin: 12px 0; }
+    .menu {
+      list-style: none;
+      padding: 0;
+      text-align: center;
+      margin: 0;
+    }
+
+    .menu li {
+      margin: 12px 0;
+    }
+
     .menu a {
       display: inline-block;
       padding: 15px 28px;
@@ -84,18 +157,59 @@
       font-weight: bold;
       transition: all 0.3s ease;
     }
-    .menu a:hover { background-color: #cc0000; transform: scale(1.08); }
-    .menu a.sabado-domingo { background-color: #4444ff; color: #ffdd00; }
+
+    .menu a:hover {
+      background-color: #cc0000;
+      transform: scale(1.08);
+    }
+
+    .menu a.sabado-domingo {
+      background-color: #4444ff;
+      color: #ffdd00;
+    }
 
     /* ===== Gamificação ===== */
-    #gamificacao { text-align: center; margin-bottom: 15px; font-size: 1.2em; }
+    #gamificacao {
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 1.2em;
+    }
 
-    footer { margin-top: 30px; text-align: center; font-size: 1.1em; text-shadow: 2px 2px 5px black; }
-    #btn-tema { margin-bottom: 20px; padding: 8px 12px; cursor: pointer; border-radius: 8px; border: none; font-weight: bold; }
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 1.1em;
+      text-shadow: 2px 2px 5px black;
+    }
+
+    #btn-tema {
+      margin-bottom: 20px;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 8px;
+      border: none;
+      font-weight: bold;
+    }
+
+    @keyframes pulse {
+      from { box-shadow: 0 0 10px #ffdd00; }
+      to { box-shadow: 0 0 30px #ff4444; }
+    }
+
+    @media(max-width: 400px) {
+      .menu a, #navegacao button {
+        padding: 12px 18px;
+        font-size: 1em;
+      }
+      h1 { font-size: 2em; }
+      .menu-container h2 { font-size: 1.5em; }
+      #mes-ano { font-size: 1.4em; }
+      .dia { padding: 8px 0; font-size: 0.9em; }
+    }
   </style>
 </head>
-<body>
 
+<body>
   <h1>Calendário X-Men + Treinos</h1>
   <button id="btn-tema">🌗 Alternar Tema</button>
 
@@ -130,15 +244,6 @@
   <footer>✨ Treine como um X-Men! ✨</footer>
 
   <script>
-    /* ===== Registrar Service Worker ===== */
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then(reg => console.log('Service Worker registrado!', reg))
-          .catch(err => console.log('Erro ao registrar SW:', err));
-      });
-    }
-
     /* ===== Tema Claro/Escuro ===== */
     const btnTema = document.getElementById('btn-tema');
     btnTema.addEventListener('click', () => {
@@ -231,6 +336,7 @@
       if(mesAtual<0){ mesAtual=11; anoAtual--; }
       carregarCalendario(mesAtual,anoAtual);
     });
+
     btnProximo.addEventListener('click',()=>{
       mesAtual++;
       if(mesAtual>11){ mesAtual=0; anoAtual++; }
@@ -251,5 +357,94 @@
     }
     setTimeout(()=>notificar("💪 Hora do treino X-Men!"),5000);
   </script>
+
+  <!-- Registro SW + Atualização Automática -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').then((registration) => {
+        console.log('✅ Service Worker registrado com sucesso.');
+
+        registration.addEventListener('updatefound', () => {
+          const newWorker = registration.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              showUpdateBanner(registration);
+            }
+          });
+        });
+      });
+
+      function showUpdateBanner(registration) {
+        const banner = document.createElement('div');
+        banner.style.cssText = `
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          background: linear-gradient(90deg, #ff4444, #ffdd00);
+          color: #000;
+          font-family: 'Bangers', sans-serif;
+          text-align: center;
+          padding: 15px;
+          font-size: 1.2em;
+          box-shadow: 0 -4px 10px rgba(0,0,0,0.5);
+          cursor: pointer;
+          z-index: 9999;
+          text-shadow: 1px 1px 3px rgba(255,255,255,0.6);
+          animation: pulse 1.5s infinite alternate;
+        `;
+        banner.textContent = "🆕 Nova versão disponível — clique para atualizar!";
+        banner.onclick = () => {
+          registration.waiting.postMessage("SKIP_WAITING");
+          window.location.reload();
+        };
+        document.body.appendChild(banner);
+      }
+    }
+  </script>
+  <script>
+  /* ===== Detector de Conexão (Online / Offline) ===== */
+  const bannerStatus = document.createElement('div');
+  bannerStatus.style.cssText = `
+    position: fixed;
+    top: -80px;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(90deg, #ff4444, #ffdd00);
+    color: #000;
+    font-family: 'Bangers', sans-serif;
+    text-align: center;
+    padding: 15px;
+    font-size: 1.3em;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+    z-index: 9999;
+    transition: all 0.6s ease;
+  `;
+  document.body.appendChild(bannerStatus);
+
+  function showStatus(msg, color1, color2, duration = 2500) {
+    bannerStatus.textContent = msg;
+    bannerStatus.style.background = `linear-gradient(90deg, ${color1}, ${color2})`;
+    bannerStatus.style.top = '0';
+    setTimeout(() => bannerStatus.style.top = '-80px', duration);
+  }
+
+  // Detecta mudanças de estado de rede
+  window.addEventListener('online', () => {
+    showStatus('✅ Conectado novamente!', '#00e676', '#aeea00');
+  });
+
+  window.addEventListener('offline', () => {
+    showStatus('⚠️ Sem conexão com a internet', '#ff4444', '#ff9100', 4000);
+  });
+
+  // Exibe o estado inicial ao carregar
+  if (!navigator.onLine) {
+    setTimeout(() => showStatus('⚠️ Você está offline', '#ff4444', '#ff9100', 4000), 1000);
+  }
+</script>
+
 </body>
 </html>
