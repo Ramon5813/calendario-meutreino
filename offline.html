@@ -1,15 +1,155 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Offline</title>
-<style>
-  body { font-family: sans-serif; text-align: center; padding: 50px; background: #000; color: #ffdd00; }
-  h1 { font-size: 2em; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Você está offline | X-Men Treinos</title>
+
+  <!-- Fonte HQ -->
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --amarelo-xmen: #ffdd00;
+      --vermelho-xmen: #ff4444;
+      --azul-xmen: #1b1e38;
+      --verde-xmen: #00e676;
+    }
+
+    body {
+      font-family: 'Bangers', sans-serif;
+      background: url('xmen-bg.jpg') center/cover no-repeat fixed, var(--azul-xmen);
+      color: var(--amarelo-xmen);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.4em;
+      text-shadow: 3px 3px 8px black;
+      animation: pulseText 2s infinite alternate;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 1.3em;
+      text-shadow: 2px 2px 4px black;
+      max-width: 500px;
+      margin-bottom: 25px;
+    }
+
+    button {
+      background: linear-gradient(90deg, var(--vermelho-xmen), var(--amarelo-xmen));
+      color: #000;
+      font-family: 'Bangers', sans-serif;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.3em;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(255,221,0,0.8);
+      transition: all 0.3s ease;
+      animation: pulseBtn 1.5s infinite alternate;
+    }
+
+    button:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 30px rgba(255,68,68,1);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 15px;
+      font-size: 1.1em;
+      color: var(--amarelo-xmen);
+      text-shadow: 1px 1px 4px black;
+      opacity: 0.8;
+    }
+
+    /* ===== Banner de Status ===== */
+    #banner-status {
+      position: fixed;
+      top: -80px;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(90deg, var(--vermelho-xmen), var(--amarelo-xmen));
+      color: #000;
+      font-family: 'Bangers', sans-serif;
+      text-align: center;
+      padding: 15px;
+      font-size: 1.3em;
+      font-weight: bold;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+      z-index: 9999;
+      transition: all 0.6s ease;
+    }
+
+    @keyframes pulseText {
+      from { text-shadow: 0 0 10px var(--amarelo-xmen); }
+      to { text-shadow: 0 0 25px var(--vermelho-xmen); }
+    }
+
+    @keyframes pulseBtn {
+      from { box-shadow: 0 0 15px rgba(255,221,0,0.8); }
+      to { box-shadow: 0 0 35px rgba(255,68,68,1); }
+    }
+
+    @media(max-width: 480px) {
+      h1 { font-size: 1.8em; }
+      p { font-size: 1.1em; }
+      button { font-size: 1.1em; padding: 12px 25px; }
+    }
+  </style>
 </head>
+
 <body>
-<h1>Você está offline!</h1>
-<p>Conecte-se à internet para acessar todos os recursos do Treinos X-Men.</p>
+  <div id="banner-status"></div>
+
+  <h1>🦸 Você está offline!</h1>
+  <p>Sem conexão no momento. Conecte-se à internet para continuar treinando como um verdadeiro X-Men.</p>
+  <button id="btn-reload">🔄 Tentar novamente</button>
+
+  <footer>⚡ X-Men Treinos – Modo Offline Ativo</footer>
+
+  <script>
+    const banner = document.getElementById('banner-status');
+    const btnReload = document.getElementById('btn-reload');
+
+    function showBanner(msg, color1, color2, duration = 2500) {
+      banner.textContent = msg;
+      banner.style.background = `linear-gradient(90deg, ${color1}, ${color2})`;
+      banner.style.top = '0';
+      setTimeout(() => banner.style.top = '-80px', duration);
+    }
+
+    // Tenta recarregar manualmente
+    btnReload.addEventListener('click', () => {
+      if (navigator.onLine) {
+        showBanner('✅ Conectado novamente!', '#00e676', '#aeea00');
+        setTimeout(() => window.location.href = 'index.html', 1500);
+      } else {
+        showBanner('⚠️ Ainda sem conexão', '#ff4444', '#ff9100', 3000);
+      }
+    });
+
+    // Detecta reconexão automática
+    window.addEventListener('online', () => {
+      showBanner('✅ Conectado novamente!', '#00e676', '#aeea00');
+      setTimeout(() => window.location.href = 'index.html', 2000);
+    });
+
+    // Exibe estado inicial
+    if (!navigator.onLine) {
+      setTimeout(() => showBanner('⚠️ Você está offline', '#ff4444', '#ff9100', 3000), 1000);
+    }
+  </script>
 </body>
 </html>
