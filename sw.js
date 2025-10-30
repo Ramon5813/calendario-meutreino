@@ -1,8 +1,8 @@
 // =====================================================
-// 🧠 X-Men Treinos - Service Worker Avançado (v2.1)
+// 🧠 X-Men Treinos - Service Worker Avançado (v2.2)
 // =====================================================
 
-const CACHE_VERSION = "v2.1";
+const CACHE_VERSION = "v2.2";
 const CACHE_NAME = `xmen-treinos-${CACHE_VERSION}`;
 const OFFLINE_URL = "/offline.html";
 
@@ -17,15 +17,21 @@ const URLS_TO_CACHE = [
   "/sabado-domingo.html",
   "/observacoes.html",
   "/dietas.html",
-  "/xmen-bg.jpg",
+  "/xmen-bg.jpeg",
   "/style.css",
   "/icons/xmen-192.png",
   "/icons/xmen-512.png",
+  "/treino-segunda.jpeg",
+  "/treino-terca.jpeg",
+  "/treino-quarta.jpeg",
+  "/treino-quinta.jpeg",
+  "/treino-sexta.jpeg",
+  "/treino-sabado.jpeg",
   OFFLINE_URL
 ];
 
 // =====================================================
-// 🧱 INSTALAÇÃO - Armazena arquivos essenciais
+// 🧱 INSTALAÇÃO
 // =====================================================
 self.addEventListener("install", (event) => {
   console.log("📦 Instalando Service Worker...");
@@ -35,34 +41,34 @@ self.addEventListener("install", (event) => {
       .catch((err) => console.error("❌ Erro ao armazenar cache:", err))
   );
   self.skipWaiting();
-  self.clients.claim();
 });
 
 // =====================================================
-// 🧹 ATIVAÇÃO - Remove caches antigos
+// 🧹 ATIVAÇÃO
 // =====================================================
 self.addEventListener("activate", (event) => {
   console.log("🔁 Ativando nova versão do SW...");
   event.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(keys.map((key) => {
-        if (key !== CACHE_NAME) {
-          console.log("🗑️ Removendo cache antigo:", key);
-          return caches.delete(key);
-        }
-      }))
+      Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            console.log("🗑️ Removendo cache antigo:", key);
+            return caches.delete(key);
+          }
+        })
+      )
     )
   );
   self.clients.claim();
 });
 
 // =====================================================
-// 🌐 FETCH - Estratégia Cache First + Atualização BG
+// 🌐 FETCH - Cache First + Atualização BG
 // =====================================================
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
-  // Ignora requisições externas (CDNs, APIs)
   if (!event.request.url.startsWith(self.location.origin)) {
     return event.respondWith(fetch(event.request));
   }
@@ -83,7 +89,10 @@ self.addEventListener("fetch", (event) => {
             if (event.request.mode === "navigate") {
               return caches.match(OFFLINE_URL);
             }
-            return new Response("", { status: 503, statusText: "Offline" });
+            return new Response("Conteúdo indisponível offline", {
+              status: 503,
+              headers: { "Content-Type": "text/plain" }
+            });
           });
 
         return cachedResponse || fetchPromise;
@@ -97,6 +106,10 @@ self.addEventListener("fetch", (event) => {
 self.addEventListener("message", (event) => {
   if (event.data === "SKIP_WAITING") {
     console.log("⏩ Atualização forçada do SW.");
-    self.skipWaiting();
+    self.skipWaiting().then(() => {
+      self.clients.matchAll().then(clients => {
+        clients.forEach(client => client.postMessage("UPDATE_READY"));
+      });
+    });
   }
 });
