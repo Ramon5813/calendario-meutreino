@@ -1,9 +1,9 @@
 // =====================================================
-// 🧠 X-Men Treinos - Service Worker Avançado (v2.2)
+// 💪 Treinos - Ramon - Service Worker Avançado (v1.0)
 // =====================================================
 
-const CACHE_VERSION = "v2.2";
-const CACHE_NAME = `xmen-treinos-${CACHE_VERSION}`;
+const CACHE_VERSION = "v1.0";
+const CACHE_NAME = `treinos-ramon-${CACHE_VERSION}`;
 const OFFLINE_URL = "/offline.html";
 
 const URLS_TO_CACHE = [
@@ -17,10 +17,10 @@ const URLS_TO_CACHE = [
   "/sabado-domingo.html",
   "/observacoes.html",
   "/dietas.html",
-  "/xmen-bg.jpeg",
+  "/bg-treinos.jpg",
   "/style.css",
-  "/icons/xmen-192.png",
-  "/icons/xmen-512.png",
+  "/icons/ramon-192.png",
+  "/icons/ramon-512.png",
   "/treino-segunda.jpeg",
   "/treino-terca.jpeg",
   "/treino-quarta.jpeg",
@@ -34,7 +34,7 @@ const URLS_TO_CACHE = [
 // 🧱 INSTALAÇÃO
 // =====================================================
 self.addEventListener("install", (event) => {
-  console.log("📦 Instalando Service Worker...");
+  console.log("📦 Instalando Service Worker Treinos - Ramon...");
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => cache.addAll(URLS_TO_CACHE))
@@ -47,7 +47,7 @@ self.addEventListener("install", (event) => {
 // 🧹 ATIVAÇÃO
 // =====================================================
 self.addEventListener("activate", (event) => {
-  console.log("🔁 Ativando nova versão do SW...");
+  console.log("🔁 Ativando nova versão do SW Treinos - Ramon...");
   event.waitUntil(
     caches.keys().then((keys) =>
       Promise.all(
@@ -64,7 +64,7 @@ self.addEventListener("activate", (event) => {
 });
 
 // =====================================================
-// 🌐 FETCH - Cache First + Atualização BG
+// 🌐 FETCH - Cache First + Atualização em BG
 // =====================================================
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
@@ -78,7 +78,7 @@ self.addEventListener("fetch", (event) => {
       .then((cachedResponse) => {
         const fetchPromise = fetch(event.request)
           .then((networkResponse) => {
-            if (networkResponse && networkResponse.status === 200) {
+            if (networkResponse && networkResponse.status === 200 && networkResponse.type === "basic") {
               const clonedResponse = networkResponse.clone();
               caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clonedResponse));
             }
@@ -86,12 +86,12 @@ self.addEventListener("fetch", (event) => {
           })
           .catch(() => {
             if (cachedResponse) return cachedResponse;
-            if (event.request.mode === "navigate") {
+            if (event.request.destination === "document" || event.request.mode === "navigate") {
               return caches.match(OFFLINE_URL);
             }
             return new Response("Conteúdo indisponível offline", {
               status: 503,
-              headers: { "Content-Type": "text/plain" }
+              headers: { "Content-Type": "text/plain; charset=utf-8" }
             });
           });
 
@@ -105,7 +105,7 @@ self.addEventListener("fetch", (event) => {
 // =====================================================
 self.addEventListener("message", (event) => {
   if (event.data === "SKIP_WAITING") {
-    console.log("⏩ Atualização forçada do SW.");
+    console.log("⏩ Atualização forçada do SW Treinos - Ramon.");
     self.skipWaiting().then(() => {
       self.clients.matchAll().then(clients => {
         clients.forEach(client => client.postMessage("UPDATE_READY"));
