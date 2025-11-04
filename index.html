@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Treinos X-Men - Gamificação</title>
+  <title>Treinos - Ramon</title>
 
   <!-- Fonte HQ -->
   <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
@@ -13,7 +13,6 @@
   <meta name="theme-color" content="#ffdd00">
 
   <style>
-    /* ===== Corpo ===== */
     body {
       font-family: 'Bangers', sans-serif;
       background-image: url('xmen-bg.jpg');
@@ -39,12 +38,6 @@
       color: #222;
     }
 
-    body.tema-claro .menu a {
-      background-color: #444;
-      color: #ffdd00;
-    }
-
-    /* ===== Container ===== */
     .container {
       max-width: 600px;
       width: 100%;
@@ -61,7 +54,6 @@
       text-shadow: 2px 2px 5px black;
     }
 
-    /* ===== Calendário ===== */
     #calendario {
       width: 100%;
       background: rgba(0,0,0,0.8);
@@ -134,7 +126,6 @@
       transform: scale(1.1);
     }
 
-    /* ===== Menu ===== */
     .menu {
       list-style: none;
       padding: 0;
@@ -168,7 +159,6 @@
       color: #ffdd00;
     }
 
-    /* ===== Gamificação ===== */
     #gamificacao {
       text-align: center;
       margin-bottom: 15px;
@@ -190,30 +180,14 @@
       border: none;
       font-weight: bold;
     }
-
-    @keyframes pulse {
-      from { box-shadow: 0 0 10px #ffdd00; }
-      to { box-shadow: 0 0 30px #ff4444; }
-    }
-
-    @media(max-width: 400px) {
-      .menu a, #navegacao button {
-        padding: 12px 18px;
-        font-size: 1em;
-      }
-      h1 { font-size: 2em; }
-      .menu-container h2 { font-size: 1.5em; }
-      #mes-ano { font-size: 1.4em; }
-      .dia { padding: 8px 0; font-size: 0.9em; }
-    }
   </style>
 </head>
 
 <body>
-  <h1>Calendário X-Men + Treinos</h1>
+  <h1>Treinos - Ramon</h1>
   <button id="btn-tema">🌗 Alternar Tema</button>
 
-  <div id="gamificacao" class="container">Pontos: 0 | Medalha: Nenhuma</div>
+  <div id="gamificacao" class="container">Pontos: 0</div>
 
   <div class="container" id="calendario">
     <div id="mes-ano"></div>
@@ -241,10 +215,9 @@
     </ul>
   </div>
 
-  <footer>✨ Treine ate suar ! ✨</footer>
+  <footer>✨ Treine até suar! ✨</footer>
 
   <script>
-    /* ===== Tema Claro/Escuro ===== */
     const btnTema = document.getElementById('btn-tema');
     btnTema.addEventListener('click', () => {
       document.body.classList.toggle('tema-claro');
@@ -252,7 +225,6 @@
     });
     if(localStorage.getItem('tema') === 'claro') document.body.classList.add('tema-claro');
 
-    /* ===== Gamificação e Calendário ===== */
     const gamificacaoEl = document.getElementById('gamificacao');
     const mesAnoEl = document.getElementById('mes-ano');
     const diasMesEl = document.getElementById('dias-mes');
@@ -267,11 +239,7 @@
       const chave = `diasMarcados-${anoAtual}-${mesAtual}`;
       const diasMarcados = JSON.parse(localStorage.getItem(chave)) || [];
       const pontos = diasMarcados.length;
-      let medalha = '';
-      if (pontos >= 20) medalha = '🏆 Mestre X-Men';
-      else if (pontos >= 10) medalha = '🥇 Treinador X-Men';
-      else if (pontos >= 5) medalha = '🥈 Aprendiz X-Men';
-      gamificacaoEl.textContent = `Pontos: ${pontos} | Medalha: ${medalha || 'Nenhuma'}`;
+      gamificacaoEl.textContent = `Pontos: ${pontos}`;
     }
 
     function carregarCalendario(mes, ano) {
@@ -344,108 +312,6 @@
     });
 
     carregarCalendario(mesAtual,anoAtual);
-
-    /* ===== Notificações ===== */
-    function notificar(texto){
-      if(Notification.permission==='granted'){
-        new Notification(texto);
-      } else if(Notification.permission!=='denied'){
-        Notification.requestPermission().then(p=>{
-          if(p==='granted') new Notification(texto);
-        });
-      }
-    }
-    setTimeout(()=>notificar("💪 Hora do treino X-Men!"),5000);
   </script>
-
-  <!-- Registro SW + Atualização Automática -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').then((registration) => {
-        console.log('✅ Service Worker registrado com sucesso.');
-
-        registration.addEventListener('updatefound', () => {
-          const newWorker = registration.installing;
-          newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              showUpdateBanner(registration);
-            }
-          });
-        });
-      });
-
-      function showUpdateBanner(registration) {
-        const banner = document.createElement('div');
-        banner.style.cssText = `
-          position: fixed;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          background: linear-gradient(90deg, #ff4444, #ffdd00);
-          color: #000;
-          font-family: 'Bangers', sans-serif;
-          text-align: center;
-          padding: 15px;
-          font-size: 1.2em;
-          box-shadow: 0 -4px 10px rgba(0,0,0,0.5);
-          cursor: pointer;
-          z-index: 9999;
-          text-shadow: 1px 1px 3px rgba(255,255,255,0.6);
-          animation: pulse 1.5s infinite alternate;
-        `;
-        banner.textContent = "🆕 Nova versão disponível — clique para atualizar!";
-        banner.onclick = () => {
-          registration.waiting.postMessage("SKIP_WAITING");
-          window.location.reload();
-        };
-        document.body.appendChild(banner);
-      }
-    }
-  </script>
-  <script>
-  /* ===== Detector de Conexão (Online / Offline) ===== */
-  const bannerStatus = document.createElement('div');
-  bannerStatus.style.cssText = `
-    position: fixed;
-    top: -80px;
-    left: 0;
-    width: 100%;
-    background: linear-gradient(90deg, #ff4444, #ffdd00);
-    color: #000;
-    font-family: 'Bangers', sans-serif;
-    text-align: center;
-    padding: 15px;
-    font-size: 1.3em;
-    font-weight: bold;
-    letter-spacing: 1px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.8);
-    z-index: 9999;
-    transition: all 0.6s ease;
-  `;
-  document.body.appendChild(bannerStatus);
-
-  function showStatus(msg, color1, color2, duration = 2500) {
-    bannerStatus.textContent = msg;
-    bannerStatus.style.background = `linear-gradient(90deg, ${color1}, ${color2})`;
-    bannerStatus.style.top = '0';
-    setTimeout(() => bannerStatus.style.top = '-80px', duration);
-  }
-
-  // Detecta mudanças de estado de rede
-  window.addEventListener('online', () => {
-    showStatus('✅ Conectado novamente!', '#00e676', '#aeea00');
-  });
-
-  window.addEventListener('offline', () => {
-    showStatus('⚠️ Sem conexão com a internet', '#ff4444', '#ff9100', 4000);
-  });
-
-  // Exibe o estado inicial ao carregar
-  if (!navigator.onLine) {
-    setTimeout(() => showStatus('⚠️ Você está offline', '#ff4444', '#ff9100', 4000), 1000);
-  }
-</script>
-
 </body>
 </html>
-
